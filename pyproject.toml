@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "esiosapy"
-version = "0.1.0"
+version = "0.0.1"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
 authors = ["M4RC0Sx"]
 license = "MIT License"
@@ -13,6 +13,14 @@ packages = [
 python = "^3.8"
 
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.12"
+mypy = "^1.8.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+strict = true
+
