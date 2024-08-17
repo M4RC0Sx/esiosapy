@@ -1,0 +1,85 @@
+name: release
+on:
+    push:
+        branches:
+        - master
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            #----------------------------------------------
+            #       Check-out repo
+            #----------------------------------------------
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+            
+            #----------------------------------------------
+            #       Install Node.js and Semantic Release
+            #----------------------------------------------
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20.16.0'
+            - name: Install Semantic Release
+              run: npm install -g semantic-release@24.1.0 @semantic-release/git@10.0.1 @semantic-release/changelog@6.0.3 conventional-changelog-conventionalcommits@8.0.0 semantic-release-replace-plugin@1.2.7
+            
+            #----------------------------------------------
+            #       Install Python and Poetry
+            #       It uses .python-version file
+            #----------------------------------------------
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              id: setup-python
+            - name: Install Poetry
+              uses: snok/install-poetry@v1
+              with: 
+                version: 1.8.3
+                virtualenvs-create: true
+                virtualenvs-in-project: false
+                virtualenvs-path: ~/venvs
+                installer-parallel: true
+
+            #----------------------------------------------
+            #       Cache venv
+            #----------------------------------------------
+            - name: Cache venv
+              uses: actions/cache@v4
+              id: cached-poetry-dependencies
+              with:
+                path: ~/venvs
+                key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+            
+            #----------------------------------------------
+            #       Install dependencies if cache miss
+            #----------------------------------------------
+            - name: Install dependencies
+              if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+              run: poetry install --no-interaction --no-root
+
+            #----------------------------------------------
+            # Run poetry dummy command
+            #----------------------------------------------
+            - name: Run Poetry dummy command
+              run: poetry run python -m esiosapy
+            - name: Run Poetry dummy command 2
+              run: poetry run pip list
+            
+            #----------------------------------------------
+            #       Semantic Release
+            #----------------------------------------------
+            - name: Semantic Release
+              run: npx semantic-release
+              env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            
+            #----------------------------------------------
+            #       Build and publish package
+            #----------------------------------------------
+            - name: Build and publish package
+              run: poetry publish --build --no-interaction
+              env:
+                POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+            
