@@ -106,11 +106,12 @@ To elaborate your filtering criteria, you can check out [the attributes of the I
 - [x] Archive model handling.
 - [x] Indicator model handling.
 - [x] OfferIndicator model handling.
-- [x] Add docstrings to the entire project.
+- [ ] Add docstrings to the entire project.
 - [ ] Archive JSON model handling.
 - [ ] Auction model handling.
 - [ ] Generate wiki with/and more elaborated docs.
 - [ ] Add more unit tests.
+- [ ] Support date range slicing to avoid long requests/responses.
 
 ## Dependencies
 esiosapy depends on Pydantic and requests.
