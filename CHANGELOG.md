@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.0...v1.0.1) (2024-08-17)
+
+### Bug Fixes
+
+* **client:** remove hardcoded headers ([2ecae0c](https://github.com/M4RC0Sx/esiosapy/commit/2ecae0cfbef5194e2750f1c8e5e6b4a4139adcf6))
+
 ## 1.0.0 (2024-08-17)
 
 ### Features
