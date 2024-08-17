@@ -64,5 +64,7 @@ jobs:
             #----------------------------------------------
             - name: Run Poetry dummy command
               run: poetry run python -m esiosapy
+            - name: Run Poetry dummy command 2
+              run: poetry run pip list
 
             
