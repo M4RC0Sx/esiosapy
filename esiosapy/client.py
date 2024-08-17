@@ -5,6 +5,7 @@ import requests
 
 from esiosapy.managers.archive_manager import ArchiveManager
 from esiosapy.managers.indicator_manager import IndicatorManager
+from esiosapy.managers.offer_indicator_manager import OfferIndicatorManager
 from esiosapy.utils.request_helper import RequestHelper
 
 ESIOS_API_URL = "https://api.esios.ree.es/"
@@ -18,6 +19,9 @@ class ESIOSAPYClient:
 
         self.archives: ArchiveManager = ArchiveManager(self.request_helper)
         self.indicators: IndicatorManager = IndicatorManager(self.request_helper)
+        self.offer_indicators: OfferIndicatorManager = OfferIndicatorManager(
+            self.request_helper
+        )
 
     def raw_request(self, url: str, headers: Dict[str, str] = {}) -> requests.Response:
         headers = self.request_helper.add_default_headers(headers)
