@@ -58,14 +58,6 @@ jobs:
             - name: Install dependencies
               if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
               run: poetry install --no-interaction --no-root
-
-            #----------------------------------------------
-            # Run poetry dummy command
-            #----------------------------------------------
-            - name: Run Poetry dummy command
-              run: poetry run python -m esiosapy
-            - name: Run Poetry dummy command 2
-              run: poetry run pip list
             
             #----------------------------------------------
             #       Semantic Release
