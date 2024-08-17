@@ -3,7 +3,7 @@ name = "esiosapy"
 version = "1.0.0"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
 authors = ["M4RC0Sx"]
-license = "MIT License"
+license = "GPL-3.0 License "
 readme = "README.md"
 packages = [
     { include = "esiosapy" },
@@ -19,6 +19,11 @@ pydantic = "^2.5.3"
 ruff = "^0.1.12"
 mypy = "^1.8.0"
 types-requests = "^2.31.0.20240106"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.2"
+pytest-mock = "^3.14.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -43,3 +48,6 @@ disallow_untyped_defs = true
 init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -29,4 +29,4 @@ class ESIOSAPYClient:
         if urlparse(url).netloc == "":
             url = urljoin(self.base_url, url)
 
-        return requests.get(url, headers={"Accept": "application/json"})
+        return requests.get(url, headers=headers)
