@@ -2,7 +2,7 @@ name: release
 on:
     push:
         branches:
-        - feature/release-workflow
+        - master
 
 jobs:
     release:
@@ -66,5 +66,20 @@ jobs:
               run: poetry run python -m esiosapy
             - name: Run Poetry dummy command 2
               run: poetry run pip list
-
+            
+            #----------------------------------------------
+            #       Semantic Release
+            #----------------------------------------------
+            - name: Semantic Release
+              run: npx semantic-release
+              env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            
+            #----------------------------------------------
+            #       Build and publish package
+            #----------------------------------------------
+            - name: Build and publish package
+              run: poetry publish --build --no-interaction
+              env:
+                POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
             
