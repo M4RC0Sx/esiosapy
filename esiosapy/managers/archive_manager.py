@@ -26,11 +26,11 @@ class ArchiveManager:
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int]] = {"date": target_dt}
+        params: Dict[str, Union[str, int, List[str]]] = {"date": target_dt}
         if date_type:
             params["date_type"] = date_type.value
         if taxonomy_terms:
-            params["taxonomy_terms"] = ",".join(taxonomy_terms)
+            params["taxonomy_terms[]"] = taxonomy_terms
 
         response = self.request_helper.get_request("/archives", params=params)
         return [self._init_archive(archive) for archive in response.json()["archives"]]
@@ -47,14 +47,14 @@ class ArchiveManager:
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int]] = {
+        params: Dict[str, Union[str, int, List[str]]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }
         if date_type:
             params["date_type"] = date_type.value
         if taxonomy_terms:
-            params["taxonomy_terms"] = ",".join(taxonomy_terms)
+            params["taxonomy_terms[]"] = taxonomy_terms
 
         response = self.request_helper.get_request("/archives", params=params)
         return [self._init_archive(archive) for archive in response.json()["archives"]]
