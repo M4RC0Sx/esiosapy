@@ -1,5 +1,5 @@
+from typing import Dict, List, Optional, Union
 from urllib.parse import urljoin
-from typing import Dict, List, Union
 
 import requests
 
@@ -24,9 +24,14 @@ class RequestHelper:
     def get_request(
         self,
         path: str,
-        headers: Dict[str, str] = {},
-        params: Dict[str, Union[str, int, List[str]]] = {},
+        headers: Optional[Dict[str, str]] = None,
+        params: Optional[Dict[str, Union[str, int, List[str]]]] = None,
     ) -> requests.Response:
+        if headers is None:
+            headers = {}
+        if params is None:
+            params = {}
+
         headers = self.add_default_headers(headers)
         url = urljoin(self.base_url, path)
 

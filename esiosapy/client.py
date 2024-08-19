@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -23,7 +23,11 @@ class ESIOSAPYClient:
             self.request_helper
         )
 
-    def raw_request(self, url: str, headers: Dict[str, str] = {}) -> requests.Response:
+    def raw_request(
+        self, url: str, headers: Optional[Dict[str, str]] = None
+    ) -> requests.Response:
+        if headers is None:
+            headers = {}
         headers = self.request_helper.add_default_headers(headers)
 
         if urlparse(url).netloc == "":

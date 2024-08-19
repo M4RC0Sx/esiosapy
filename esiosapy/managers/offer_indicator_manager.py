@@ -1,6 +1,5 @@
 from typing import Dict, List, Optional, Union
 
-
 from esiosapy.models.offer_indicator.offer_indicator import OfferIndicator
 from esiosapy.utils.request_helper import RequestHelper
 

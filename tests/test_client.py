@@ -1,8 +1,10 @@
-import pytest
-from pytest_mock import MockerFixture
 from typing import Dict
 from urllib.parse import urljoin
+
+import pytest
 import requests
+from pytest_mock import MockerFixture
+
 from esiosapy.client import ESIOSAPYClient
 from esiosapy.managers.archive_manager import ArchiveManager
 from esiosapy.managers.indicator_manager import IndicatorManager
@@ -16,13 +18,13 @@ class TestESIOSAPYClient:
         mock_request_helper = mocker.patch(
             "esiosapy.client.RequestHelper", autospec=True
         )
-        mock_archive_manager = mocker.patch(
+        mock_archive_manager = mocker.patch(  # noqa: F841
             "esiosapy.client.ArchiveManager", autospec=True
         )
-        mock_indicator_manager = mocker.patch(
+        mock_indicator_manager = mocker.patch(  # noqa: F841
             "esiosapy.client.IndicatorManager", autospec=True
         )
-        mock_offer_indicator_manager = mocker.patch(
+        mock_offer_indicator_manager = mocker.patch(  # noqa: F841
             "esiosapy.client.OfferIndicatorManager", autospec=True
         )
 

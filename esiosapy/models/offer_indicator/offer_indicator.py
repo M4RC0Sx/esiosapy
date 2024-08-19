@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Dict, Any, Union
+from typing import Any, Dict, List, Union
 
 from pydantic import BaseModel
 
@@ -23,8 +23,10 @@ class OfferIndicator(BaseModel):
             from bs4 import BeautifulSoup  # type: ignore
         except ImportError:
             raise ImportError(
-                "The `beautifulsoup4` package is required to prettify the description. Install it with 'pip install beautifulsoup4' or with your preferred package manager."
-            )
+                "The `beautifulsoup4` package is required to prettify the description. "
+                "Install it with 'pip install beautifulsoup4' "
+                "or with your preferred package manager."
+            ) from None
 
         soup = BeautifulSoup(self.description, "html.parser")
         text = soup.get_text(separator="\n").strip()
