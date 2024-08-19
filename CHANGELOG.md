@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.2...v1.0.3) (2024-08-19)
+
+### Continuous Integration
+
+* **semantic-release:** include all commit types in changelog and release notes ([4ddcfc2](https://github.com/M4RC0Sx/esiosapy/commit/4ddcfc27fc506ec60d53b6d99c04f505bb653a5e))
+* **test:** fix job name ([aebd4ba](https://github.com/M4RC0Sx/esiosapy/commit/aebd4ba663fcd022529fd985ec633de4431a9633))
+
 ## [1.0.2](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.1...v1.0.2) (2024-08-19)
 
 ## [1.0.1](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.0...v1.0.1) (2024-08-17)

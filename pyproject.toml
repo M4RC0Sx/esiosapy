@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "esiosapy"
-version = "1.0.2"
+version = "1.0.3"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
 authors = ["M4RC0Sx"]
 license = "GPL-3.0 License "
