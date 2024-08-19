@@ -1,8 +1,9 @@
 from typing import Dict, List, Union
-import pytest
 from urllib.parse import urljoin
-from pytest_mock import MockerFixture
+
+import pytest
 import requests
+from pytest_mock import MockerFixture
 
 from esiosapy.utils.request_helper import RequestHelper
 

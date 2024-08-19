@@ -1,5 +1,5 @@
-from typing import Dict, List, Optional, Union
 from datetime import datetime
+from typing import Dict, List, Optional, Union
 
 from esiosapy.models.archive.archive import Archive
 from esiosapy.models.archive.archive_date_type import ArchiveDateType
