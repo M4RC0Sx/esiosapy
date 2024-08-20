@@ -92,7 +92,7 @@ client = ESIOSAPYClient(
 indicators = client.indicators.list_all()
 
 # Get first file. here you should filter with your needed criteria
-#Usually, you are looking for a specific indicator
+# Usually, you are looking for a specific indicator
 indicator = indicators[0]
 
 # Get data between 2 dates, with time_trunc of 1 hour
