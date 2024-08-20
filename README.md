@@ -106,7 +106,7 @@ To elaborate your filtering criteria, you can check out [the attributes of the I
 - [x] Archive model handling.
 - [x] Indicator model handling.
 - [x] OfferIndicator model handling.
-- [ ] Add docstrings to the entire project.
+- [x] Add docstrings to the entire project.
 - [ ] Archive JSON model handling.
 - [ ] Auction model handling.
 - [ ] Generate wiki with/and more elaborated docs.
