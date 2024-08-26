@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.3...v1.0.4) (2024-08-26)
+
+### Documentation
+
+* **archive:** add docstrings to archive manager ([3634c0b](https://github.com/M4RC0Sx/esiosapy/commit/3634c0b8df19567894b7d8561b4618c8139ee46f))
+* **archive:** add docstrings to archive models ([3ce4cae](https://github.com/M4RC0Sx/esiosapy/commit/3ce4cae1bee899259be314d79b08940941f9bd7d))
+* **client:** add docstrings to client module ([bb45129](https://github.com/M4RC0Sx/esiosapy/commit/bb45129bd56fedcd421694b17080e6601bef5b72))
+* fix code typo ([ea81ee0](https://github.com/M4RC0Sx/esiosapy/commit/ea81ee09055cb03ce0ada5a446cab680dda6e427))
+* **indicator:** add docstrings to indicator manager ([646aa39](https://github.com/M4RC0Sx/esiosapy/commit/646aa39a621725991addc2d600c51ad396f70898))
+* **indicator:** add docstrings to indicator models ([10ac21d](https://github.com/M4RC0Sx/esiosapy/commit/10ac21d3a8a66a43eae9ac2a206bf0f4d0fcef85))
+* **offer-indicator:** add docstrings to offer indicator manager ([f4a3802](https://github.com/M4RC0Sx/esiosapy/commit/f4a380245476676f2f56aebb38c42e3f3ff8cabe))
+* **offer-indicator:** add docstrings to offer indicator models ([48c36f9](https://github.com/M4RC0Sx/esiosapy/commit/48c36f999f4dbd4432e770150634d08da6afd918))
+* to-do list updated ([c646162](https://github.com/M4RC0Sx/esiosapy/commit/c646162b756fafc25acdb8f202f5917a5d4de9b4))
+* **utils:** add docstrings to utils module ([8a5b8b0](https://github.com/M4RC0Sx/esiosapy/commit/8a5b8b0df0407a4e3322aa0d502d4de5f8dade0d))
+
 ## [1.0.3](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.2...v1.0.3) (2024-08-19)
 
 ### Continuous Integration
