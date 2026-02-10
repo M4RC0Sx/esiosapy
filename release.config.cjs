@@ -106,7 +106,7 @@ module.exports = {
                 replacements: [
                     {
                         files: ["pyproject.toml"],
-                        from: 'version = ".*"',
+                        from: '^version = ".*"',
                         to: 'version = "${nextRelease.version}"',
                         countMatches: true,
                     },
