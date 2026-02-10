@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.2...v2.0.3) (2026-02-10)
+
+### Miscellaneous Chores
+
+* undo failed regex version [skip-ci] ([8593812](https://github.com/M4RC0Sx/esiosapy/commit/8593812e1a69023989ea88d95132002568060b4d))
+
 ## [2.0.2](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.1...v2.0.2) (2026-02-10)
 
 ### Continuous Integration
