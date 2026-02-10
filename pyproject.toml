@@ -33,7 +33,7 @@ requires = ["uv_build>=0.9.30,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.ruff]
-target-version = "2.0.1"
+target-version = "py39"
 line-length = 88
 
 [tool.ruff.lint]
