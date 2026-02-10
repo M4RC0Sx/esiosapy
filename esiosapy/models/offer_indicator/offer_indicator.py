@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 from datetime import datetime
-from typing import Any, Dict, List, Union
+from typing import TYPE_CHECKING
+from typing import Any
 
 from pydantic import BaseModel
 
-from esiosapy.utils.request_helper import RequestHelper
+
+if TYPE_CHECKING:
+    from esiosapy.utils.request_helper import RequestHelper
 
 
 class OfferIndicator(BaseModel):
@@ -25,7 +30,7 @@ class OfferIndicator(BaseModel):
     :type: str
     """
 
-    raw: Dict[str, Any]
+    raw: dict[str, Any]
     """Raw data associated with the offer indicator.
 
     :type: Dict[str, Any]
@@ -60,7 +65,7 @@ class OfferIndicator(BaseModel):
         :raises ImportError: If the BeautifulSoup package is not installed.
         """
         try:
-            from bs4 import BeautifulSoup  # type: ignore
+            from bs4 import BeautifulSoup  # type: ignore[import-not-found]
         except ImportError:
             raise ImportError(
                 "The `beautifulsoup4` package is required to prettify the description. "
@@ -75,7 +80,7 @@ class OfferIndicator(BaseModel):
 
     def get_data_by_date(
         self,
-        target_dt: Union[datetime, str],
+        target_dt: datetime | str,
         all_raw_data: bool = False,
     ) -> Any:
         """
@@ -97,7 +102,7 @@ class OfferIndicator(BaseModel):
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int, List[str]]] = {
+        params: dict[str, str | int | list[str]] = {
             "datetime": target_dt,
         }
 
@@ -111,8 +116,8 @@ class OfferIndicator(BaseModel):
 
     def get_data_by_date_range(
         self,
-        target_dt_start: Union[datetime, str],
-        target_dt_end: Union[datetime, str],
+        target_dt_start: datetime | str,
+        target_dt_end: datetime | str,
         all_raw_data: bool = False,
     ) -> Any:
         """
@@ -139,7 +144,7 @@ class OfferIndicator(BaseModel):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int, List[str]]] = {
+        params: dict[str, str | int | list[str]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }

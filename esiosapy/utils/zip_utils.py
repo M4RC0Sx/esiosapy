@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Union
 from zipfile import ZipFile
 
 
 def recursive_unzip(
-    zip_path: Union[str, Path], unzip_path: Union[str, Path], remove: bool = False
+    zip_path: str | Path, unzip_path: str | Path, remove: bool = False
 ) -> None:
     """
     Recursively unzips a ZIP file and all nested ZIP files

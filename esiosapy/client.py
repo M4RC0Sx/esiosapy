@@ -1,5 +1,7 @@
-from typing import Dict, Optional
-from urllib.parse import urljoin, urlparse
+from __future__ import annotations
+
+from urllib.parse import urljoin
+from urllib.parse import urlparse
 
 import requests
 
@@ -7,6 +9,7 @@ from esiosapy.managers.archive_manager import ArchiveManager
 from esiosapy.managers.indicator_manager import IndicatorManager
 from esiosapy.managers.offer_indicator_manager import OfferIndicatorManager
 from esiosapy.utils.request_helper import RequestHelper
+
 
 ESIOS_API_URL = "https://api.esios.ree.es/"
 
@@ -41,7 +44,7 @@ class ESIOSAPYClient:
         )
 
     def raw_request(
-        self, url: str, headers: Optional[Dict[str, str]] = None
+        self, url: str, headers: dict[str, str] | None = None
     ) -> requests.Response:
         """
         Makes a raw GET request to a specified URL with optional headers.

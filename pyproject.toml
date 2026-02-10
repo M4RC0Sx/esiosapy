@@ -1,63 +1,82 @@
-[tool.poetry]
+[project]
 name = "esiosapy"
 version = "1.0.4"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
-authors = ["M4RC0Sx"]
-license = "GPL-3.0 License "
+authors = [{ name = "M4RC0Sx" }]
+requires-python = ">=3.9,<4"
 readme = "README.md"
-packages = [
-    { include = "esiosapy" },
+license = "GPL-3.0-or-later"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
+dependencies = ["pydantic>=2.12.5", "requests>=2.32.5"]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-requests = "^2.31.0"
-pydantic = "^2.5.3"
+[dependency-groups]
+dev = ["mypy>=1.19.1", "ruff>=0.15.0", "types-requests>=2.32.4.20260107"]
+test = ["pytest>=8.4.2", "pytest-mock>=3.15.1"]
 
+[tool.uv]
+default-groups = ["dev", "test"]
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.1.12"
-mypy = "^1.8.0"
-types-requests = "^2.31.0.20240106"
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "^8.3.2"
-pytest-mock = "^3.14.0"
+[tool.uv.build-backend]
+module-name = ["esiosapy"]
+module-root = ""
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.9.30,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+target-version = "py39"
+line-length = 88
 
 [tool.ruff.lint]
-select = [
-    # pycodestyle
-    "E",
-    # Pyflakes
-    "F",
-    # pyupgrade
-    "UP",
-    # flake8-bugbear
-    "B",
-    # flake8-simplify
-    "SIM",
-    # isort
-    "I",
+unfixable = [
+    "ERA", # do not autoremove commented out code
 ]
+extend-select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "ERA", # flake8-eradicate/eradicate
+    "I",   # isort
+    "N",   # pep8-naming
+    "PIE", # flake8-pie
+    "PGH", # pygrep
+    "RUF", # ruff checks
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
+]
+ignore = ["ERA001"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.isort]
+force-single-line = true
+lines-between-types = 1
+lines-after-imports = 2
+known-first-party = ["esiosapy"]
+required-imports = ["from __future__ import annotations"]
 
 [tool.mypy]
+namespace_packages = true
+show_error_codes = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 strict = true
-plugins = [
-  "pydantic.mypy"
-]
-
+plugins = ["pydantic.mypy"]
 warn_redundant_casts = true
 warn_unused_ignores = true
 disallow_any_generics = true
 check_untyped_defs = true
 no_implicit_reexport = true
-
-# for strict mypy
 disallow_untyped_defs = true
 
 [tool.pydantic-mypy]

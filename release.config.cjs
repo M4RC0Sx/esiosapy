@@ -20,11 +20,23 @@ module.exports = {
                     },
                     {
                         type: "build",
+                        breaking: false,
+                        release: "patch",
+                    },
+                    {
+                        type: "build",   
+                        breaking: true,
+                        release: "major",
+                    },
+                    {
+                        type: "chore",
+                        breaking: false,
                         release: "patch",
                     },
                     {
                         type: "chore",
-                        release: "patch",
+                        breaking: true,
+                        release: "major",
                     },
                     {
                         type: "docs",
@@ -48,11 +60,13 @@ module.exports = {
                     },
                     {
                         type: "feat",
-                        release: "minor",
+                        breaking: true,
+                        release: "major",
                     },
                     {
-                        type: "BREAKING CHANGE",
-                        release: "major",
+                        type: "feat",
+                        breaking: false,
+                        release: "minor",
                     },
                 ],
             },
@@ -94,6 +108,12 @@ module.exports = {
                         files: ["pyproject.toml"],
                         from: 'version = ".*"',
                         to: 'version = "${nextRelease.version}"',
+                        countMatches: true,
+                    },
+                    {
+                        files: ["esiosapy/__init__.py"],
+                        from: '__version__ = ".*"',
+                        to: '__version__ = "${nextRelease.version}"',
                         countMatches: true,
                     },
                 ],

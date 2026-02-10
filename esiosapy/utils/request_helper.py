@@ -1,4 +1,5 @@
-from typing import Dict, List, Optional, Union
+from __future__ import annotations
+
 from urllib.parse import urljoin
 
 import requests
@@ -25,7 +26,7 @@ class RequestHelper:
         self.base_url = base_url
         self.token = token
 
-    def add_default_headers(self, headers: Dict[str, str]) -> Dict[str, str]:
+    def add_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
         """
         Adds default headers to the provided headers dictionary.
 
@@ -51,8 +52,8 @@ class RequestHelper:
     def get_request(
         self,
         path: str,
-        headers: Optional[Dict[str, str]] = None,
-        params: Optional[Dict[str, Union[str, int, List[str]]]] = None,
+        headers: dict[str, str] | None = None,
+        params: dict[str, str | int | list[str]] | None = None,
     ) -> requests.Response:
         """
         Makes a GET request to the specified path, with optional headers and parameters.
