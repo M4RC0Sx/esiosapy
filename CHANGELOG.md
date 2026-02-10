@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.4...v2.0.5) (2026-02-10)
+
+### Miscellaneous Chores
+
+* use python 3.9 type hints ([05cead4](https://github.com/M4RC0Sx/esiosapy/commit/05cead45924abaf252ab72bee3e825e456e3c0a8))
+
 ## [2.0.4](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.3...v2.0.4) (2026-02-10)
 
 ### Miscellaneous Chores
