@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 from typing import TYPE_CHECKING
 from typing import Any
+from typing import Optional
+from typing import Union
 
 from pydantic import BaseModel
 
@@ -116,7 +118,7 @@ class Archive(BaseModel):
 
     def download_file(
         self,
-        path: str | Path | None = None,
+        path: Optional[Union[str, Path]] = None,
         unzip: bool = True,
         remove_zip: bool = True,
     ) -> None:

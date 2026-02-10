@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from typing import Union
 from urllib.parse import urljoin
 
 import pytest
@@ -72,7 +73,7 @@ class TestRequestHelper:
 
         path: str = "/data"
         headers: dict[str, str] = {}
-        params: dict[str, str | int | list[str]] = {
+        params: dict[str, Union[str, int, list[str]]] = {
             "param1": "value1",
             "param2": 2,
         }
@@ -104,7 +105,7 @@ class TestRequestHelper:
 
         path: str = "/data"
         headers: dict[str, str] = {}
-        params: dict[str, str | int | list[str]] = {
+        params: dict[str, Union[str, int, list[str]]] = {
             "param1": "value1",
             "param2": 2,
         }

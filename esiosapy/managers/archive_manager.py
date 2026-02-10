@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import TYPE_CHECKING
+from typing import Optional
+from typing import Union
 
 from esiosapy.models.archive.archive import Archive
 
@@ -28,7 +30,7 @@ class ArchiveManager:
         """
         self.request_helper = request_helper
 
-    def _init_archive(self, archive: dict[str, str | int]) -> Archive:
+    def _init_archive(self, archive: dict[str, Union[str, int]]) -> Archive:
         """
         Initializes an Archive object from a dictionary of archive data.
 
@@ -54,9 +56,9 @@ class ArchiveManager:
 
     def list_by_date(
         self,
-        target_dt: datetime | str,
-        date_type: ArchiveDateType | None = None,
-        taxonomy_terms: list[str] | None = None,
+        target_dt: Union[datetime, str],
+        date_type: Optional[ArchiveDateType] = None,
+        taxonomy_terms: Optional[list[str]] = None,
     ) -> list[Archive]:
         """
         Retrieves a list of archives filtered by a specific date.
@@ -79,7 +81,7 @@ class ArchiveManager:
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, str | int | list[str]] = {"date": target_dt}
+        params: dict[str, Union[str, int, list[str]]] = {"date": target_dt}
         if date_type:
             params["date_type"] = date_type.value
         if taxonomy_terms:
@@ -90,10 +92,10 @@ class ArchiveManager:
 
     def list_by_date_range(
         self,
-        target_dt_start: datetime | str,
-        target_dt_end: datetime | str,
-        date_type: ArchiveDateType | None = None,
-        taxonomy_terms: list[str] | None = None,
+        target_dt_start: Union[datetime, str],
+        target_dt_end: Union[datetime, str],
+        date_type: Optional[ArchiveDateType] = None,
+        taxonomy_terms: Optional[list[str]] = None,
     ) -> list[Archive]:
         """
         Retrieves a list of archives filtered by a date range.
@@ -122,7 +124,7 @@ class ArchiveManager:
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, str | int | list[str]] = {
+        params: dict[str, Union[str, int, list[str]]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }
