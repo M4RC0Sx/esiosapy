@@ -1,6 +1,6 @@
 [project]
 name = "esiosapy"
-version = "1.0.4"
+version = "2.0.0"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
 authors = [{ name = "M4RC0Sx" }]
 requires-python = ">=3.9,<4"
@@ -33,7 +33,7 @@ requires = ["uv_build>=0.9.30,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.ruff]
-target-version = "py39"
+target-version = "2.0.0"
 line-length = 88
 
 [tool.ruff.lint]

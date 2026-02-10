@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.4...v2.0.0) (2026-02-10)
+
+### ⚠ BREAKING CHANGES
+
+* remove support for Python 3.8 and migrate to uv
+
+### Miscellaneous Chores
+
+* typing stuff ([a559993](https://github.com/M4RC0Sx/esiosapy/commit/a55999341228f10e7d3e743d95ca9bc0b9a86b5f))
+
+### Code Refactoring
+
+* update files to fit new ruff rules ([0d940b8](https://github.com/M4RC0Sx/esiosapy/commit/0d940b86210c67f1e13f74f2d09e21bb5ff91f50))
+
+### Build System
+
+* remove support for Python 3.8 and migrate to uv ([04062ee](https://github.com/M4RC0Sx/esiosapy/commit/04062eefb06cd91a3df4f28706f435e624f07fb5))
+
+### Continuous Integration
+
+* change pipelines to use uv ([03c2eb1](https://github.com/M4RC0Sx/esiosapy/commit/03c2eb1cd666e1d75a170af31752cfc9f4e1053a))
+* improve sr config ([b3d0dd5](https://github.com/M4RC0Sx/esiosapy/commit/b3d0dd5e119442a8e92ba2c0bd29a9788848ccc7))
+
 ## [1.0.4](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.3...v1.0.4) (2024-08-26)
 
 ### Documentation
