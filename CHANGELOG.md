@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.0...v2.0.1) (2026-02-10)
+
+### Continuous Integration
+
+* fix release stuff ([5b3dd30](https://github.com/M4RC0Sx/esiosapy/commit/5b3dd3039215b9262d62eb141455047e076c939a))
+
 ## [2.0.0](https://github.com/M4RC0Sx/esiosapy/compare/v1.0.4...v2.0.0) (2026-02-10)
 
 ### ⚠ BREAKING CHANGES
