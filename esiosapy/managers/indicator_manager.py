@@ -1,7 +1,12 @@
-from typing import Optional, Union
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from esiosapy.models.indicator.indicator import Indicator
-from esiosapy.utils.request_helper import RequestHelper
+
+
+if TYPE_CHECKING:
+    from esiosapy.utils.request_helper import RequestHelper
 
 
 class IndicatorManager:
@@ -22,7 +27,7 @@ class IndicatorManager:
         """
         self.request_helper = request_helper
 
-    def _init_indicator(self, indicator: dict[str, Union[str, int]]) -> Indicator:
+    def _init_indicator(self, indicator: dict[str, str | int]) -> Indicator:
         """
         Initializes an Indicator object from a dictionary of indicator data.
 
@@ -35,7 +40,7 @@ class IndicatorManager:
             **indicator, raw=indicator, _request_helper=self.request_helper
         )
 
-    def list_all(self, taxonomy_terms: Optional[list[str]] = None) -> list[Indicator]:
+    def list_all(self, taxonomy_terms: list[str] | None = None) -> list[Indicator]:
         """
         Retrieves a list of all indicators, optionally filtered by taxonomy terms.
 
@@ -49,7 +54,7 @@ class IndicatorManager:
         :return: A list of Indicator objects representing all (or filtered) indicators.
         :rtype: List[Indicator]
         """
-        params: dict[str, Union[str, int, list[str]]] = {}
+        params: dict[str, str | int | list[str]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 

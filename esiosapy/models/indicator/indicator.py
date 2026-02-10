@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 from datetime import datetime
-from typing import Any, Optional, Union
+from typing import TYPE_CHECKING
+from typing import Any
 
 from pydantic import BaseModel
 
-from esiosapy.models.indicator.geo_agg import GeoAgg
-from esiosapy.models.indicator.geo_trunc import GeoTrunc
-from esiosapy.models.indicator.time_agg import TimeAgg
-from esiosapy.models.indicator.time_trunc import TimeTrunc
-from esiosapy.utils.request_helper import RequestHelper
+
+if TYPE_CHECKING:
+    from esiosapy.models.indicator.geo_agg import GeoAgg
+    from esiosapy.models.indicator.geo_trunc import GeoTrunc
+    from esiosapy.models.indicator.time_agg import TimeAgg
+    from esiosapy.models.indicator.time_trunc import TimeTrunc
+    from esiosapy.utils.request_helper import RequestHelper
 
 
 class Indicator(BaseModel):
@@ -81,7 +86,7 @@ class Indicator(BaseModel):
         :rtype: str
         """
         try:
-            from bs4 import BeautifulSoup  # type: ignore
+            from bs4 import BeautifulSoup  # type: ignore[import-not-found]
         except ImportError:
             raise ImportError(
                 "The `beautifulsoup4` package is required to prettify the description. "
@@ -96,13 +101,13 @@ class Indicator(BaseModel):
 
     def get_data(
         self,
-        target_dt_start: Union[datetime, str],
-        target_dt_end: Union[datetime, str],
-        geo_ids: Optional[list[str]] = None,
-        geo_agg: Optional[GeoAgg] = None,
-        geo_trunc: Optional[GeoTrunc] = None,
-        time_agg: Optional[TimeAgg] = None,
-        time_trunc: Optional[TimeTrunc] = None,
+        target_dt_start: datetime | str,
+        target_dt_end: datetime | str,
+        geo_ids: list[str] | None = None,
+        geo_agg: GeoAgg | None = None,
+        geo_trunc: GeoTrunc | None = None,
+        time_agg: TimeAgg | None = None,
+        time_trunc: TimeTrunc | None = None,
         all_raw_data: bool = False,
     ) -> Any:
         """
@@ -134,7 +139,7 @@ class Indicator(BaseModel):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, Optional[Union[str, int, list[str]]]] = {
+        params: dict[str, str | int | list[str] | None] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
             "geo_ids": ",".join(geo_ids) if geo_ids else None,

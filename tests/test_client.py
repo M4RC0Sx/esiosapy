@@ -1,14 +1,21 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from urllib.parse import urljoin
 
 import pytest
-import requests
-from pytest_mock import MockerFixture
 
 from esiosapy.client import ESIOSAPYClient
 from esiosapy.managers.archive_manager import ArchiveManager
 from esiosapy.managers.indicator_manager import IndicatorManager
 from esiosapy.managers.offer_indicator_manager import OfferIndicatorManager
 from esiosapy.utils.request_helper import RequestHelper
+
+
+if TYPE_CHECKING:
+    import requests
+
+    from pytest_mock import MockerFixture
 
 
 class TestESIOSAPYClient:
