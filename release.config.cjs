@@ -127,7 +127,7 @@ module.exports = {
             {
                 message:
                     "chore: release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
-                assets: ["CHANGELOG.md", "pyproject.toml"],
+                assets: ["CHANGELOG.md", "pyproject.toml", "esiosapy/__init__.py"],
             },
         ],
     ],
