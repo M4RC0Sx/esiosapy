@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from typing import Optional
+from typing import Union
 
 from esiosapy.models.offer_indicator.offer_indicator import OfferIndicator
 
@@ -27,7 +29,7 @@ class OfferIndicatorManager:
         """
         self.request_helper = request_helper
 
-    def _init_indicator(self, indicator: dict[str, str | int]) -> OfferIndicator:
+    def _init_indicator(self, indicator: dict[str, Union[str, int]]) -> OfferIndicator:
         """
         Initializes an OfferIndicator object from a dictionary of indicator data.
 
@@ -40,7 +42,9 @@ class OfferIndicatorManager:
             **indicator, raw=indicator, _request_helper=self.request_helper
         )
 
-    def list_all(self, taxonomy_terms: list[str] | None = None) -> list[OfferIndicator]:
+    def list_all(
+        self, taxonomy_terms: Optional[list[str]] = None
+    ) -> list[OfferIndicator]:
         """
         Retrieves a list of all offer indicators, optionally filtered by taxonomy terms.
 
@@ -55,7 +59,7 @@ class OfferIndicatorManager:
                  offer indicators.
         :rtype: List[OfferIndicator]
         """
-        params: dict[str, str | int | list[str]] = {}
+        params: dict[str, Union[str, int, list[str]]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 

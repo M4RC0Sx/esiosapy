@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 from typing import Any
+from typing import Optional
+from typing import Union
 
 from pydantic import BaseModel
 
@@ -47,7 +49,7 @@ class Indicator(BaseModel):
     :type: str
     """
 
-    description: str
+    description: str = "No description available."
     """A detailed description of the indicator.
 
     :type: str
@@ -101,13 +103,13 @@ class Indicator(BaseModel):
 
     def get_data(
         self,
-        target_dt_start: datetime | str,
-        target_dt_end: datetime | str,
-        geo_ids: list[str] | None = None,
-        geo_agg: GeoAgg | None = None,
-        geo_trunc: GeoTrunc | None = None,
-        time_agg: TimeAgg | None = None,
-        time_trunc: TimeTrunc | None = None,
+        target_dt_start: Union[datetime, str],
+        target_dt_end: Union[datetime, str],
+        geo_ids: Optional[list[str]] = None,
+        geo_agg: Optional[GeoAgg] = None,
+        geo_trunc: Optional[GeoTrunc] = None,
+        time_agg: Optional[TimeAgg] = None,
+        time_trunc: Optional[TimeTrunc] = None,
         all_raw_data: bool = False,
     ) -> Any:
         """
@@ -139,7 +141,7 @@ class Indicator(BaseModel):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, str | int | list[str] | None] = {
+        params: dict[str, Union[str, int, list[str], None]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
             "geo_ids": ",".join(geo_ids) if geo_ids else None,

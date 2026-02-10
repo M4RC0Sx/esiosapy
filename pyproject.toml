@@ -66,14 +66,20 @@ lines-after-imports = 2
 known-first-party = ["esiosapy"]
 required-imports = ["from __future__ import annotations"]
 
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
 [tool.mypy]
+strict = true
+python_version = "3.9"
 namespace_packages = true
 show_error_codes = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
-strict = true
 plugins = ["pydantic.mypy"]
 warn_redundant_casts = true
 warn_unused_ignores = true
+warn_unused_configs = true
 disallow_any_generics = true
 check_untyped_defs = true
 no_implicit_reexport = true

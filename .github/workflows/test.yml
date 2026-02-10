@@ -9,42 +9,62 @@ on:
         - synchronize
 
 jobs:
-    run-tests:
+    linting:
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
         steps:
-            #----------------------------------------------
-            #       Check-out repo
-            #----------------------------------------------
             - name: Checkout
               uses: actions/checkout@v4
               with:
                 fetch-depth: 0
 
-            #----------------------------------------------
-            #       Install uv
-            #----------------------------------------------
             - name: Install uv
               uses: astral-sh/setup-uv@v5
               with:
                 enable-cache: true
 
-            #----------------------------------------------
-            #       Install dependencies
-            #----------------------------------------------
             - name: Install dependencies
               run: uv sync --frozen
 
-            #----------------------------------------------
-            #       Run linting checks
-            #----------------------------------------------
-            - name: Run linting checks
+            - name: Run ruff check
               run: uv run ruff check
 
-            #----------------------------------------------
-            #       Run tests
-            #----------------------------------------------
+            - name: Run format check
+              run: uv run ruff format --check
+
+    typing:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                enable-cache: true
+
+            - name: Install dependencies
+              run: uv sync --frozen
+
+            - name: Run mypy
+              run: uv run mypy esiosapy tests
+
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                enable-cache: true
+
+            - name: Install dependencies
+              run: uv sync --frozen
+
             - name: Run tests
               run: uv run pytest
-            
