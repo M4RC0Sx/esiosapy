@@ -54,7 +54,9 @@ jobs:
             #       Build and publish package
             #----------------------------------------------
             - name: Build and publish package
-              run: uv publish --build
+              run: |
+                uv build
+                uv publish
               env:
-                UV_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+                UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
             
