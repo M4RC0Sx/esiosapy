@@ -1,33 +1,39 @@
-[tool.poetry]
+[project]
 name = "esiosapy"
 version = "0.0.1"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
-authors = ["M4RC0Sx"]
-license = "GPL-3.0 License "
+authors = [{ name = "M4RC0Sx" }]
+requires-python = ">=3.9,<4"
 readme = "README.md"
-packages = [
-    { include = "esiosapy" },
+license = "GPL-3.0-or-later"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "pydantic>=2.12.5",
+    "requests>=2.32.5",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-requests = "^2.31.0"
-pydantic = "^2.5.3"
+[dependency-groups]
+dev = ["mypy>=1.19.1", "ruff>=0.15.0", "types-requests>=2.32.4.20260107"]
+test = ["pytest>=8.4.2", "pytest-mock>=3.15.1"]
 
+[tool.uv]
+default-groups = ["dev", "test"]
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.1.12"
-mypy = "^1.8.0"
-types-requests = "^2.31.0.20240106"
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "^8.3.2"
-pytest-mock = "^3.14.0"
+[tool.uv.build-backend]
+module-name = ["esiosapy"]
+module-root = ""
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.9.30,<0.10.0"]
+build-backend = "uv_build"
 
 [tool.ruff.lint]
 select = [
@@ -47,9 +53,7 @@ select = [
 
 [tool.mypy]
 strict = true
-plugins = [
-  "pydantic.mypy"
-]
+plugins = ["pydantic.mypy"]
 
 warn_redundant_casts = true
 warn_unused_ignores = true

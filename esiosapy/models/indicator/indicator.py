@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from pydantic import BaseModel
 
@@ -48,7 +48,7 @@ class Indicator(BaseModel):
     :type: str
     """
 
-    raw: Dict[str, Any]
+    raw: dict[str, Any]
     """The raw dictionary containing the original data of the indicator.
 
     :type: Dict[str, Any]
@@ -98,7 +98,7 @@ class Indicator(BaseModel):
         self,
         target_dt_start: Union[datetime, str],
         target_dt_end: Union[datetime, str],
-        geo_ids: Optional[List[str]] = None,
+        geo_ids: Optional[list[str]] = None,
         geo_agg: Optional[GeoAgg] = None,
         geo_trunc: Optional[GeoTrunc] = None,
         time_agg: Optional[TimeAgg] = None,
@@ -134,7 +134,7 @@ class Indicator(BaseModel):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Optional[Union[str, int, List[str]]]] = {
+        params: dict[str, Optional[Union[str, int, list[str]]]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
             "geo_ids": ",".join(geo_ids) if geo_ids else None,

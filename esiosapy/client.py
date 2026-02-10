@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Optional
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -41,7 +41,7 @@ class ESIOSAPYClient:
         )
 
     def raw_request(
-        self, url: str, headers: Optional[Dict[str, str]] = None
+        self, url: str, headers: Optional[dict[str, str]] = None
     ) -> requests.Response:
         """
         Makes a raw GET request to a specified URL with optional headers.

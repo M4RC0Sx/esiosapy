@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Union
 from urllib.parse import urljoin
 
 import pytest
@@ -16,8 +16,8 @@ class TestRequestHelper:
     def test_add_default_headers_with_empty_headers(
         self, request_helper: RequestHelper
     ) -> None:
-        headers: Dict[str, str] = {}
-        expected_headers: Dict[str, str] = {
+        headers: dict[str, str] = {}
+        expected_headers: dict[str, str] = {
             "Accept": "application/json; application/vnd.esios-api-v1+json",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
@@ -30,7 +30,7 @@ class TestRequestHelper:
     def test_add_default_headers_with_existing_headers(
         self, request_helper: RequestHelper
     ) -> None:
-        headers: Dict[str, str] = {
+        headers: dict[str, str] = {
             "Accept": "text/html",
             "Content-Type": "application/xml",
             "x-api-key": "another-token",
@@ -43,8 +43,8 @@ class TestRequestHelper:
     def test_add_default_headers_with_partial_headers(
         self, request_helper: RequestHelper
     ) -> None:
-        headers: Dict[str, str] = {"Accept": "text/plain"}
-        expected_headers: Dict[str, str] = {
+        headers: dict[str, str] = {"Accept": "text/plain"}
+        expected_headers: dict[str, str] = {
             "Accept": "text/plain",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
@@ -66,14 +66,14 @@ class TestRequestHelper:
         mock_get.return_value = mock_response
 
         path: str = "/data"
-        headers: Dict[str, str] = {}
-        params: Dict[str, Union[str, int, List[str]]] = {
+        headers: dict[str, str] = {}
+        params: dict[str, Union[str, int, list[str]]] = {
             "param1": "value1",
             "param2": 2,
         }
 
         expected_url: str = urljoin("https://api.example.com", path)
-        expected_headers: Dict[str, str] = {
+        expected_headers: dict[str, str] = {
             "Accept": "application/json; application/vnd.esios-api-v1+json",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
@@ -98,8 +98,8 @@ class TestRequestHelper:
         mock_get.return_value = mock_response
 
         path: str = "/data"
-        headers: Dict[str, str] = {}
-        params: Dict[str, Union[str, int, List[str]]] = {
+        headers: dict[str, str] = {}
+        params: dict[str, Union[str, int, list[str]]] = {
             "param1": "value1",
             "param2": 2,
         }

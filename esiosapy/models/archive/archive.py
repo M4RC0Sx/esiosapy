@@ -1,7 +1,7 @@
 import os
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from pydantic import BaseModel
 
@@ -57,31 +57,31 @@ class Archive(BaseModel):
     :type: datetime
     """
 
-    date_times: List[date] = []
+    date_times: list[date] = []
     """A list of dates associated with the archive.
 
     :type: List[date]
     """
 
-    publication_date: List[date] = []
+    publication_date: list[date] = []
     """A list of publication dates for the archive.
 
     :type: List[date]
     """
 
-    taxonomy_terms: List[TaxonomyTerm] = []
+    taxonomy_terms: list[TaxonomyTerm] = []
     """A list of taxonomy terms associated with the archive.
 
     :type: List[TaxonomyTerm]
     """
 
-    vocabularies: List[Vocabulary] = []
+    vocabularies: list[Vocabulary] = []
     """A list of vocabularies associated with the archive.
 
     :type: List[Vocabulary]
     """
 
-    raw: Dict[str, Any]
+    raw: dict[str, Any]
     """The raw data from which the archive object was created.
 
     :type: Dict[str, Any]

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, List, Optional, Union
+from typing import Optional, Union
 
 from esiosapy.models.archive.archive import Archive
 from esiosapy.models.archive.archive_date_type import ArchiveDateType
@@ -23,7 +23,7 @@ class ArchiveManager:
         """
         self.request_helper = request_helper
 
-    def _init_archive(self, archive: Dict[str, Union[str, int]]) -> Archive:
+    def _init_archive(self, archive: dict[str, Union[str, int]]) -> Archive:
         """
         Initializes an Archive object from a dictionary of archive data.
 
@@ -34,7 +34,7 @@ class ArchiveManager:
         """
         return Archive(**archive, raw=archive, _request_helper=self.request_helper)
 
-    def list_all(self) -> List[Archive]:
+    def list_all(self) -> list[Archive]:
         """
         Retrieves a list of all archives.
 
@@ -51,8 +51,8 @@ class ArchiveManager:
         self,
         target_dt: Union[datetime, str],
         date_type: Optional[ArchiveDateType] = None,
-        taxonomy_terms: Optional[List[str]] = None,
-    ) -> List[Archive]:
+        taxonomy_terms: Optional[list[str]] = None,
+    ) -> list[Archive]:
         """
         Retrieves a list of archives filtered by a specific date.
 
@@ -74,7 +74,7 @@ class ArchiveManager:
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int, List[str]]] = {"date": target_dt}
+        params: dict[str, Union[str, int, list[str]]] = {"date": target_dt}
         if date_type:
             params["date_type"] = date_type.value
         if taxonomy_terms:
@@ -88,8 +88,8 @@ class ArchiveManager:
         target_dt_start: Union[datetime, str],
         target_dt_end: Union[datetime, str],
         date_type: Optional[ArchiveDateType] = None,
-        taxonomy_terms: Optional[List[str]] = None,
-    ) -> List[Archive]:
+        taxonomy_terms: Optional[list[str]] = None,
+    ) -> list[Archive]:
         """
         Retrieves a list of archives filtered by a date range.
 
@@ -117,7 +117,7 @@ class ArchiveManager:
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int, List[str]]] = {
+        params: dict[str, Union[str, int, list[str]]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }

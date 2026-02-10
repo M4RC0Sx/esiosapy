@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Optional, Union
 
 from esiosapy.models.indicator.indicator import Indicator
 from esiosapy.utils.request_helper import RequestHelper
@@ -22,7 +22,7 @@ class IndicatorManager:
         """
         self.request_helper = request_helper
 
-    def _init_indicator(self, indicator: Dict[str, Union[str, int]]) -> Indicator:
+    def _init_indicator(self, indicator: dict[str, Union[str, int]]) -> Indicator:
         """
         Initializes an Indicator object from a dictionary of indicator data.
 
@@ -35,7 +35,7 @@ class IndicatorManager:
             **indicator, raw=indicator, _request_helper=self.request_helper
         )
 
-    def list_all(self, taxonomy_terms: Optional[List[str]] = None) -> List[Indicator]:
+    def list_all(self, taxonomy_terms: Optional[list[str]] = None) -> list[Indicator]:
         """
         Retrieves a list of all indicators, optionally filtered by taxonomy terms.
 
@@ -49,7 +49,7 @@ class IndicatorManager:
         :return: A list of Indicator objects representing all (or filtered) indicators.
         :rtype: List[Indicator]
         """
-        params: Dict[str, Union[str, int, List[str]]] = {}
+        params: dict[str, Union[str, int, list[str]]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 
@@ -59,7 +59,7 @@ class IndicatorManager:
             for indicator in response.json()["indicators"]
         ]
 
-    def search(self, name: str) -> List[Indicator]:
+    def search(self, name: str) -> list[Indicator]:
         """
         Searches for indicators by name.
 

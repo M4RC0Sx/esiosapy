@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Union
+from typing import Any, Union
 
 from pydantic import BaseModel
 
@@ -25,7 +25,7 @@ class OfferIndicator(BaseModel):
     :type: str
     """
 
-    raw: Dict[str, Any]
+    raw: dict[str, Any]
     """Raw data associated with the offer indicator.
 
     :type: Dict[str, Any]
@@ -97,7 +97,7 @@ class OfferIndicator(BaseModel):
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int, List[str]]] = {
+        params: dict[str, Union[str, int, list[str]]] = {
             "datetime": target_dt,
         }
 
@@ -139,7 +139,7 @@ class OfferIndicator(BaseModel):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: Dict[str, Union[str, int, List[str]]] = {
+        params: dict[str, Union[str, int, list[str]]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }

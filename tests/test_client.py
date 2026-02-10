@@ -1,4 +1,3 @@
-from typing import Dict
 from urllib.parse import urljoin
 
 import pytest
@@ -30,7 +29,7 @@ class TestESIOSAPYClient:
 
         mock_add_default_headers = mock_request_helper.return_value.add_default_headers
 
-        def add_default_headers_side_effect(headers: Dict[str, str]) -> Dict[str, str]:
+        def add_default_headers_side_effect(headers: dict[str, str]) -> dict[str, str]:
             default_headers = {
                 "Accept": "application/json; application/vnd.esios-api-v1+json",
                 "Content-Type": "application/json",
@@ -61,11 +60,11 @@ class TestESIOSAPYClient:
         mock_get.return_value = mock_response
 
         url: str = "https://api.example.com/data"
-        headers: Dict[str, str] = {"Custom-Header": "value"}
+        headers: dict[str, str] = {"Custom-Header": "value"}
 
         response: requests.Response = esios_client.raw_request(url, headers)
 
-        expected_headers: Dict[str, str] = {
+        expected_headers: dict[str, str] = {
             "Accept": "application/json; application/vnd.esios-api-v1+json",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
@@ -83,10 +82,10 @@ class TestESIOSAPYClient:
         mock_get.return_value = mock_response
 
         url: str = "/data"
-        headers: Dict[str, str] = {}
+        headers: dict[str, str] = {}
 
         expected_url: str = urljoin(esios_client.base_url, url)
-        expected_headers: Dict[str, str] = {
+        expected_headers: dict[str, str] = {
             "Accept": "application/json; application/vnd.esios-api-v1+json",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
