@@ -27,6 +27,7 @@ class RequestHelper:
         """
         self.base_url = base_url
         self.token = token
+        self._session = requests.Session()
 
     def add_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
         """
@@ -83,7 +84,7 @@ class RequestHelper:
         headers = self.add_default_headers(headers)
         url = urljoin(self.base_url, path)
 
-        response = requests.get(url, headers=headers, params=params)
+        response = self._session.get(url, headers=headers, params=params)
         response.raise_for_status()
 
         return response
