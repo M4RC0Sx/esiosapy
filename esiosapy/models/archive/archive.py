@@ -9,6 +9,7 @@ from typing import Optional
 from typing import Union
 
 from pydantic import BaseModel
+from pydantic import Field
 
 from esiosapy.utils.zip_utils import recursive_unzip
 
@@ -68,25 +69,25 @@ class Archive(BaseModel):
     :type: datetime
     """
 
-    date_times: list[date] = []
+    date_times: list[date] = Field(default_factory=list)
     """A list of dates associated with the archive.
 
     :type: List[date]
     """
 
-    publication_date: list[date] = []
+    publication_date: list[date] = Field(default_factory=list)
     """A list of publication dates for the archive.
 
     :type: List[date]
     """
 
-    taxonomy_terms: list[TaxonomyTerm] = []
+    taxonomy_terms: list[TaxonomyTerm] = Field(default_factory=list)
     """A list of taxonomy terms associated with the archive.
 
     :type: List[TaxonomyTerm]
     """
 
-    vocabularies: list[Vocabulary] = []
+    vocabularies: list[Vocabulary] = Field(default_factory=list)
     """A list of vocabularies associated with the archive.
 
     :type: List[Vocabulary]
