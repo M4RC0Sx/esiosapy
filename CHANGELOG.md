@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.5...v2.1.0) (2026-02-12)
+
+### Features
+
+* add async support ([ad92a50](https://github.com/M4RC0Sx/esiosapy/commit/ad92a50eb6af8ec167ff1ec591b920d1a58ab0d9))
+* custom exception handling ([e1013b5](https://github.com/M4RC0Sx/esiosapy/commit/e1013b5405fd65b18551ba2fc9cbb74b0a400fd1))
+* **request-helper:** add http session to improve performance ([9e1d0d0](https://github.com/M4RC0Sx/esiosapy/commit/9e1d0d0345a569a063db49e27e7c29bc48e151a0))
+
+### Bug Fixes
+
+* **archive:** remove mutable defaults ([105f72a](https://github.com/M4RC0Sx/esiosapy/commit/105f72a76811fc88f7802fbd4ca7863f834a8875))
+* pydantic imports and type_checking blocks ([c42cec7](https://github.com/M4RC0Sx/esiosapy/commit/c42cec7fc6745d837c07ad5c779b8fac0f18dd6e))
+* **utils:** add module export to init file ([9ceb224](https://github.com/M4RC0Sx/esiosapy/commit/9ceb2244516862fdb924aebf02a0c7d75cd5c7fc))
+
+### Miscellaneous Chores
+
+* install bs4 as dev dep ([de8965e](https://github.com/M4RC0Sx/esiosapy/commit/de8965e400cb0cb915c7f010d0e2d47705535c21))
+* remove bs4 type ignore ([01cbafc](https://github.com/M4RC0Sx/esiosapy/commit/01cbafc4a7cdebb41029d675aa06735b2f6414b9))
+
+### Tests
+
+* increase coverage to 88% ([752365a](https://github.com/M4RC0Sx/esiosapy/commit/752365ab991d02518b8d0239abad889c56bee0e4))
+* increase coverage to 88% ([5153e31](https://github.com/M4RC0Sx/esiosapy/commit/5153e31f99691f8c7aae479ef19d11d7979e85ed))
+* install httpx as test dep ([4ec8b49](https://github.com/M4RC0Sx/esiosapy/commit/4ec8b49028c611b2b9e608badc27dc9feb49ccb2))
+
 ## [2.0.5](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.4...v2.0.5) (2026-02-10)
 
 ### Miscellaneous Chores
