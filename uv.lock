@@ -437,6 +437,7 @@ beautifulsoup = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "beautifulsoup4" },
     { name = "mypy" },
     { name = "ruff" },
     { name = "types-requests" },
@@ -464,6 +465,7 @@ provides-extras = ["all", "async", "beautifulsoup"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "beautifulsoup4", specifier = ">=4.14.3" },
     { name = "mypy", specifier = ">=1.19.1" },
     { name = "ruff", specifier = ">=0.15.0" },
     { name = "types-requests", specifier = ">=2.32.4.20260107" },
