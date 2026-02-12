@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+from datetime import date  # noqa: TC003
+from datetime import datetime  # noqa: TC003
 from pathlib import Path
 from typing import TYPE_CHECKING
 from typing import Any
@@ -11,16 +13,13 @@ from typing import Union
 from pydantic import BaseModel
 from pydantic import Field
 
+from esiosapy.models.archive.archive_download import ArchiveDownload  # noqa: TC001
+from esiosapy.models.archive.taxonomy_term import TaxonomyTerm  # noqa: TC001
+from esiosapy.models.archive.vocabulary import Vocabulary  # noqa: TC001
 from esiosapy.utils.zip_utils import recursive_unzip
 
 
 if TYPE_CHECKING:
-    from datetime import date
-    from datetime import datetime
-
-    from esiosapy.models.archive.archive_download import ArchiveDownload
-    from esiosapy.models.archive.taxonomy_term import TaxonomyTerm
-    from esiosapy.models.archive.vocabulary import Vocabulary
     from esiosapy.utils.request_helper import RequestHelper
 
 
