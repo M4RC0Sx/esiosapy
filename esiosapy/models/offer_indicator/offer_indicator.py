@@ -66,7 +66,7 @@ class OfferIndicator(BaseModel):
         :raises ImportError: If the BeautifulSoup package is not installed.
         """
         try:
-            from bs4 import BeautifulSoup  # type: ignore[import-not-found]
+            from bs4 import BeautifulSoup
         except ImportError:
             raise ImportError(
                 "The `beautifulsoup4` package is required to prettify the description. "

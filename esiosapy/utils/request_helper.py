@@ -6,6 +6,10 @@ from urllib.parse import urljoin
 
 import requests
 
+from esiosapy.exceptions import APIResponseError
+from esiosapy.exceptions import AuthenticationError
+from esiosapy.exceptions import ESIOSAPIError
+
 
 class RequestHelper:
     """
@@ -27,6 +31,7 @@ class RequestHelper:
         """
         self.base_url = base_url
         self.token = token
+        self._session = requests.Session()
 
     def add_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
         """
@@ -83,7 +88,21 @@ class RequestHelper:
         headers = self.add_default_headers(headers)
         url = urljoin(self.base_url, path)
 
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
+        try:
+            response = self._session.get(url, headers=headers, params=params)
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            status_code = e.response.status_code if e.response else None
+            if status_code == 401:
+                msg = "Authentication failed. Check your API token."
+                raise AuthenticationError(msg, {"status_code": status_code}) from e
+            if status_code == 403:
+                msg = "Access forbidden. Check your API token permissions."
+                raise AuthenticationError(msg, {"status_code": status_code}) from e
+            msg = f"API request failed with status {status_code}"
+            raise APIResponseError(msg, status_code=status_code) from e
+        except requests.RequestException as e:
+            msg = f"Network error: {e}"
+            raise ESIOSAPIError(msg) from e
 
         return response

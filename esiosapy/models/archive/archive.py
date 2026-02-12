@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+from datetime import date  # noqa: TC003
+from datetime import datetime  # noqa: TC003
 from pathlib import Path
 from typing import TYPE_CHECKING
 from typing import Any
@@ -9,17 +11,15 @@ from typing import Optional
 from typing import Union
 
 from pydantic import BaseModel
+from pydantic import Field
 
+from esiosapy.models.archive.archive_download import ArchiveDownload  # noqa: TC001
+from esiosapy.models.archive.taxonomy_term import TaxonomyTerm  # noqa: TC001
+from esiosapy.models.archive.vocabulary import Vocabulary  # noqa: TC001
 from esiosapy.utils.zip_utils import recursive_unzip
 
 
 if TYPE_CHECKING:
-    from datetime import date
-    from datetime import datetime
-
-    from esiosapy.models.archive.archive_download import ArchiveDownload
-    from esiosapy.models.archive.taxonomy_term import TaxonomyTerm
-    from esiosapy.models.archive.vocabulary import Vocabulary
     from esiosapy.utils.request_helper import RequestHelper
 
 
@@ -68,25 +68,25 @@ class Archive(BaseModel):
     :type: datetime
     """
 
-    date_times: list[date] = []
+    date_times: list[date] = Field(default_factory=list)
     """A list of dates associated with the archive.
 
     :type: List[date]
     """
 
-    publication_date: list[date] = []
+    publication_date: list[date] = Field(default_factory=list)
     """A list of publication dates for the archive.
 
     :type: List[date]
     """
 
-    taxonomy_terms: list[TaxonomyTerm] = []
+    taxonomy_terms: list[TaxonomyTerm] = Field(default_factory=list)
     """A list of taxonomy terms associated with the archive.
 
     :type: List[TaxonomyTerm]
     """
 
-    vocabularies: list[Vocabulary] = []
+    vocabularies: list[Vocabulary] = Field(default_factory=list)
     """A list of vocabularies associated with the archive.
 
     :type: List[Vocabulary]

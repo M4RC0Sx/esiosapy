@@ -6,13 +6,11 @@ from urllib.parse import urlparse
 
 import requests
 
+from esiosapy.constants import ESIOS_API_URL
 from esiosapy.managers.archive_manager import ArchiveManager
 from esiosapy.managers.indicator_manager import IndicatorManager
 from esiosapy.managers.offer_indicator_manager import OfferIndicatorManager
 from esiosapy.utils.request_helper import RequestHelper
-
-
-ESIOS_API_URL = "https://api.esios.ree.es/"
 
 
 class ESIOSAPYClient:
