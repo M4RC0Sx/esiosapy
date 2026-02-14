@@ -30,6 +30,7 @@ class TestAsyncRequestHelper:
             "Accept": "application/json; application/vnd.esios-api-v1+json",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
+            "User-Agent": "esiosapy/0.0.1",
         }
 
         result = async_request_helper.add_default_headers(headers)

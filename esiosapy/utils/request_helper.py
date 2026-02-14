@@ -14,6 +14,7 @@ from tenacity import retry_if_exception_type
 from tenacity import stop_after_attempt
 from tenacity import wait_exponential
 
+from esiosapy import __version__
 from esiosapy.exceptions import APIResponseError
 from esiosapy.exceptions import AuthenticationError
 from esiosapy.exceptions import ESIOSAPIError
@@ -55,8 +56,8 @@ class RequestHelper:
         """
         Adds default headers to the provided headers dictionary.
 
-        This method adds the 'Accept', 'Content-Type', and 'x-api-key' headers
-        to the headers dictionary if they are not already present.
+        This method adds the 'Accept', 'Content-Type', 'x-api-key', and
+        'User-Agent' headers to the headers dictionary if they are not already present.
 
         :param headers: The headers to which the defaults will be added.
         :type headers: Dict[str, str]
@@ -71,6 +72,9 @@ class RequestHelper:
 
         if "x-api-key" not in headers:
             headers["x-api-key"] = self.token
+
+        if "User-Agent" not in headers:
+            headers["User-Agent"] = f"esiosapy/{__version__}"
 
         return headers
 

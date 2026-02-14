@@ -11,6 +11,7 @@ from tenacity import retry_if_exception_type
 from tenacity import stop_after_attempt
 from tenacity import wait_exponential
 
+from esiosapy import __version__
 from esiosapy.exceptions import APIResponseError
 from esiosapy.exceptions import AuthenticationError
 from esiosapy.exceptions import ESIOSAPIError
@@ -99,6 +100,9 @@ class AsyncRequestHelper:
 
         if "x-api-key" not in headers:
             headers["x-api-key"] = self.token
+
+        if "User-Agent" not in headers:
+            headers["User-Agent"] = f"esiosapy/{__version__}"
 
         return headers
 

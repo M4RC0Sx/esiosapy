@@ -37,6 +37,7 @@ class TestRequestHelper:
             "Accept": "application/json; application/vnd.esios-api-v1+json",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
+            "User-Agent": "esiosapy/0.0.1",
         }
 
         result = request_helper.add_default_headers(headers)
@@ -64,6 +65,7 @@ class TestRequestHelper:
             "Accept": "text/plain",
             "Content-Type": "application/json",
             "x-api-key": "test-token",
+            "User-Agent": "esiosapy/0.0.1",
         }
 
         result = request_helper.add_default_headers(headers)
