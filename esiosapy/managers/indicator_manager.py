@@ -4,14 +4,15 @@ from typing import TYPE_CHECKING
 from typing import Optional
 from typing import Union
 
-from esiosapy.models.indicator.indicator import Indicator
+from esiosapy.managers.base import BaseIndicatorManager
+from esiosapy.utils.request_helper import RequestHelper
 
 
 if TYPE_CHECKING:
-    from esiosapy.utils.request_helper import RequestHelper
+    from esiosapy.models.indicator.indicator import Indicator
 
 
-class IndicatorManager:
+class IndicatorManager(BaseIndicatorManager[RequestHelper]):
     """
     Manages indicator-related operations for the ESIOS API.
 
@@ -25,22 +26,8 @@ class IndicatorManager:
         Initializes the IndicatorManager with a RequestHelper.
 
         :param request_helper: An instance of RequestHelper used to make API requests.
-        :type request_helper: RequestHelper
         """
-        self.request_helper = request_helper
-
-    def _init_indicator(self, indicator: dict[str, Union[str, int]]) -> Indicator:
-        """
-        Initializes an Indicator object from a dictionary of indicator data.
-
-        :param indicator: A dictionary containing indicator data.
-        :type indicator: Dict[str, Union[str, int]]
-        :return: An Indicator object initialized with the provided data.
-        :rtype: Indicator
-        """
-        return Indicator(
-            **indicator, raw=indicator, _request_helper=self.request_helper
-        )
+        super().__init__(request_helper)
 
     def list_all(self, taxonomy_terms: Optional[list[str]] = None) -> list[Indicator]:
         """
@@ -52,15 +39,13 @@ class IndicatorManager:
 
         :param taxonomy_terms: A list of taxonomy terms to filter the indicators,
                                defaults to None.
-        :type taxonomy_terms: Optional[List[str]], optional
         :return: A list of Indicator objects representing all (or filtered) indicators.
-        :rtype: List[Indicator]
         """
         params: dict[str, Union[str, int, list[str]]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 
-        response = self.request_helper.get_request("/indicators", params=params)
+        response = self.request_helper.get_request(self._endpoint, params=params)
         return [
             self._init_indicator(indicator)
             for indicator in response.json()["indicators"]
@@ -75,11 +60,11 @@ class IndicatorManager:
         specified name.
 
         :param name: The name or part of the name to search for in indicators.
-        :type name: str
         :return: A list of Indicator objects that match the search query.
-        :rtype: List[Indicator]
         """
-        response = self.request_helper.get_request("/indicators", params={"text": name})
+        response = self.request_helper.get_request(
+            self._endpoint, params={"text": name}
+        )
         return [
             self._init_indicator(indicator)
             for indicator in response.json()["indicators"]

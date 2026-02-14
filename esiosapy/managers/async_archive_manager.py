@@ -1,16 +1,20 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import TYPE_CHECKING
+from typing import Optional
 from typing import Union
 
-from esiosapy.models.archive.archive import Archive
+from esiosapy.managers.base import BaseArchiveManager
+from esiosapy.utils.async_request_helper import AsyncRequestHelper
 
 
 if TYPE_CHECKING:
-    from esiosapy.utils.async_request_helper import AsyncRequestHelper
+    from esiosapy.models.archive.archive import Archive
+    from esiosapy.models.archive.archive_date_type import ArchiveDateType
 
 
-class AsyncArchiveManager:
+class AsyncArchiveManager(BaseArchiveManager[AsyncRequestHelper]):
     """
     Manages archive-related operations for the ESIOS API (async version).
 
@@ -23,119 +27,90 @@ class AsyncArchiveManager:
         Initializes the AsyncArchiveManager with an AsyncRequestHelper.
 
         :param request_helper: An instance of AsyncRequestHelper used to make API requests.
-        :type request_helper: AsyncRequestHelper
         """
-        self.request_helper = request_helper
+        super().__init__(request_helper)
 
-    def _init_archive(self, archive: dict[str, Union[str, int]]) -> Archive:
+    async def list_all(self) -> list[Archive]:
         """
-        Initializes an Archive object from a dictionary of archive data.
-
-        :param archive: A dictionary containing archive data.
-        :type archive: Dict[str, Union[str, int]]
-        :return: An Archive object initialized with the provided data.
-        :rtype: Archive
-        """
-        return Archive(**archive, raw=archive, _request_helper=self.request_helper)
-
-    async def list_all(
-        self,
-        page: int = 1,
-        per_page: int = 50,
-        only_files: bool = False,
-    ) -> list[Archive]:
-        """
-        Retrieves a list of all archives, optionally filtered by page and per_page.
+        Retrieves a list of all archives.
 
         This method sends a GET request to the `/archives` endpoint and
-        returns a list of Archive objects.
+        returns a list of Archive objects representing all available archives.
 
-        :param page: The page number for pagination, defaults to 1.
-        :type page: int, optional
-        :param per_page: The number of archives per page, defaults to 50.
-        :type per_page: int, optional
-        :param only_files: If True, only returns archives with files, defaults to False.
-        :type only_files: bool, optional
-        :return: A list of Archive objects representing all (or filtered) archives.
-        :rtype: list[Archive]
+        :return: A list of Archive objects representing all archives.
         """
-        params: dict[str, Union[str, int, bool]] = {
-            "page": page,
-            "per_page": per_page,
-            "only_files": only_files,
-        }
-
-        response = await self.request_helper.get_request("/archives", params=params)
+        response = await self.request_helper.get_request(self._endpoint)
         return [self._init_archive(archive) for archive in response.json()["archives"]]
 
     async def list_by_date(
         self,
-        date_time: str,
-        page: int = 1,
-        per_page: int = 50,
-        only_files: bool = False,
+        target_dt: Union[datetime, str],
+        date_type: Optional[ArchiveDateType] = None,
+        taxonomy_terms: Optional[list[str]] = None,
     ) -> list[Archive]:
         """
-        Retrieves archives for a specific date.
+        Retrieves a list of archives filtered by a specific date.
 
-        This method sends a GET request to the `/archives` endpoint filtered
-        by a specific date and returns a list of Archive objects.
+        This method sends a GET request to the `/archives` endpoint with filters
+        based on the provided date, date type, and optional taxonomy terms.
 
-        :param date_time: The date for which to retrieve archives (ISO format).
-        :type date_time: str
-        :param page: The page number for pagination, defaults to 1.
-        :type page: int, optional
-        :param per_page: The number of archives per page, defaults to 50.
-        :type per_page: int, optional
-        :param only_files: If True, only returns archives with files, defaults to False.
-        :type only_files: bool, optional
-        :return: A list of Archive objects for the specified date.
-        :rtype: list[Archive]
+        :param target_dt: The target date for filtering archives. Can be a datetime
+                          object or an ISO 8601 formatted string.
+        :param date_type: The type of date to filter by (e.g., publication date),
+                          defaults to None.
+        :param taxonomy_terms: A list of taxonomy terms to further filter the archives,
+                               defaults to None.
+        :return: A list of Archive objects filtered by the specified date.
         """
-        params: dict[str, Union[str, int, bool]] = {
-            "date": date_time,
-            "page": page,
-            "per_page": per_page,
-            "only_files": only_files,
-        }
+        if isinstance(target_dt, datetime):
+            target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        response = await self.request_helper.get_request("/archives", params=params)
+        params: dict[str, Union[str, int, list[str]]] = {"date": target_dt}
+        if date_type:
+            params["date_type"] = date_type.value
+        if taxonomy_terms:
+            params["taxonomy_terms[]"] = taxonomy_terms
+
+        response = await self.request_helper.get_request(self._endpoint, params=params)
         return [self._init_archive(archive) for archive in response.json()["archives"]]
 
     async def list_by_date_range(
         self,
-        start_date: str,
-        end_date: str,
-        page: int = 1,
-        per_page: int = 50,
-        only_files: bool = False,
+        target_dt_start: Union[datetime, str],
+        target_dt_end: Union[datetime, str],
+        date_type: Optional[ArchiveDateType] = None,
+        taxonomy_terms: Optional[list[str]] = None,
     ) -> list[Archive]:
         """
-        Retrieves archives within a date range.
+        Retrieves a list of archives filtered by a date range.
 
-        This method sends a GET request to the `/archives` endpoint filtered
-        by a start and end date and returns a list of Archive objects.
+        This method sends a GET request to the `/archives` endpoint with filters
+        based on the provided start and end dates, date type, and optional taxonomy
+        terms.
 
-        :param start_date: The start date of the range (ISO format).
-        :type start_date: str
-        :param end_date: The end date of the range (ISO format).
-        :type end_date: str
-        :param page: The page number for pagination, defaults to 1.
-        :type page: int, optional
-        :param per_page: The number of archives per page, defaults to 50.
-        :type per_page: int, optional
-        :param only_files: If True, only returns archives with files, defaults to False.
-        :type only_files: bool, optional
-        :return: A list of Archive objects within the specified date range.
-        :rtype: list[Archive]
+        :param target_dt_start: The start date for filtering archives. Can be a datetime
+                                object or an ISO 8601 formatted string.
+        :param target_dt_end: The end date for filtering archives. Can be a datetime
+                              object or an ISO 8601 formatted string.
+        :param date_type: The type of date to filter by (e.g., publication date),
+                          defaults to None.
+        :param taxonomy_terms: A list of taxonomy terms to further filter the archives,
+                               defaults to None.
+        :return: A list of Archive objects filtered by the specified date range.
         """
-        params: dict[str, Union[str, int, bool]] = {
-            "start_date": start_date,
-            "end_date": end_date,
-            "page": page,
-            "per_page": per_page,
-            "only_files": only_files,
-        }
+        if isinstance(target_dt_start, datetime):
+            target_dt_start = target_dt_start.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
+        if isinstance(target_dt_end, datetime):
+            target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        response = await self.request_helper.get_request("/archives", params=params)
+        params: dict[str, Union[str, int, list[str]]] = {
+            "start_date": target_dt_start,
+            "end_date": target_dt_end,
+        }
+        if date_type:
+            params["date_type"] = date_type.value
+        if taxonomy_terms:
+            params["taxonomy_terms[]"] = taxonomy_terms
+
+        response = await self.request_helper.get_request(self._endpoint, params=params)
         return [self._init_archive(archive) for archive in response.json()["archives"]]
