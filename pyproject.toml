@@ -41,6 +41,9 @@ all = ["httpx>=0.27.0", "beautifulsoup4>=4.14.3"]
 async = ["httpx>=0.27.0"]
 beautifulsoup = ["beautifulsoup4>=4.14.3"]
 
+[project.scripts]
+esiosapy = "esiosapy.cli:main"
+
 [tool.uv]
 default-groups = ["dev", "test"]
 
