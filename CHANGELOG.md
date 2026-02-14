@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.1...v2.2.2) (2026-02-14)
+
+### Continuous Integration
+
+* remove pages deploy protection ([ad3612d](https://github.com/M4RC0Sx/esiosapy/commit/ad3612d76238d6a8876ad0b0a1d4c2664f1b0245))
+
 ## [2.2.1](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.0...v2.2.1) (2026-02-14)
 
 ### Documentation
