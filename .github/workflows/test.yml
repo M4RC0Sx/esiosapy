@@ -9,8 +9,9 @@ on:
         - synchronize
 
 jobs:
-    linting:
+    check-format-lint-typing:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -26,32 +27,20 @@ jobs:
               run: uv sync --frozen
 
             - name: Run ruff check
-              run: uv run ruff check
+              run: uv run ruff check esiosapy tests
 
             - name: Run format check
-              run: uv run ruff format --check
-
-    typing:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-
-            - name: Install uv
-              uses: astral-sh/setup-uv@v5
-              with:
-                enable-cache: true
-
-            - name: Install dependencies
-              run: uv sync --frozen
+              run: uv run ruff format --check esiosapy tests
 
             - name: Run mypy
               run: uv run mypy esiosapy tests
 
-    tests:
+    test:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
+        strategy:
+            matrix:
+                python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -62,6 +51,7 @@ jobs:
               uses: astral-sh/setup-uv@v5
               with:
                 enable-cache: true
+                python-version: ${{ matrix.python-version }}
 
             - name: Install dependencies
               run: uv sync --frozen
