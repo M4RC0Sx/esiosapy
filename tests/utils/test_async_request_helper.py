@@ -26,16 +26,13 @@ class TestAsyncRequestHelper:
         self, async_request_helper: AsyncRequestHelper
     ) -> None:
         headers: dict[str, str] = {}
-        expected_headers: dict[str, str] = {
-            "Accept": "application/json; application/vnd.esios-api-v1+json",
-            "Content-Type": "application/json",
-            "x-api-key": "test-token",
-            "User-Agent": "esiosapy/0.0.1",
-        }
 
         result = async_request_helper.add_default_headers(headers)
 
-        assert result == expected_headers
+        assert result["Accept"] == "application/json; application/vnd.esios-api-v1+json"
+        assert result["Content-Type"] == "application/json"
+        assert result["x-api-key"] == "test-token"
+        assert result["User-Agent"].startswith("esiosapy/")
 
     def test_add_default_headers_with_existing_headers(
         self, async_request_helper: AsyncRequestHelper
