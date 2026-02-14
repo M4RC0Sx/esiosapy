@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/M4RC0Sx/esiosapy/compare/v2.1.0...v2.2.0) (2026-02-14)
+
+### Features
+
+* add cli and module entrypoint for quick testing ([547ce5b](https://github.com/M4RC0Sx/esiosapy/commit/547ce5bcea81d494505f897b966fb106dd93a0e5))
+* add configurable timeout on both clients ([525c6a1](https://github.com/M4RC0Sx/esiosapy/commit/525c6a17a86d4ce8cf35f1747bee9409bf42b65c))
+* add default user agent header ([6e0101c](https://github.com/M4RC0Sx/esiosapy/commit/6e0101cefdafbad1df3860c8f5c3450e3ade8fc5))
+* add logging and retry logic ([45967c3](https://github.com/M4RC0Sx/esiosapy/commit/45967c345b14a5ff251f6f82828b520ae5716b08))
+* allow sync client to be used as a context manager ([79033ac](https://github.com/M4RC0Sx/esiosapy/commit/79033ac28667fe3746c65cc057d7938e5c06a02b))
+
+### Code Refactoring
+
+* remove duplicate code between sync and async ([e4373b8](https://github.com/M4RC0Sx/esiosapy/commit/e4373b849323aa934a2b0a84cb7443fc2e4748fc))
+
+### Tests
+
+* do not look for a specific version on headers tests ([1fcbe76](https://github.com/M4RC0Sx/esiosapy/commit/1fcbe76e266d0e7e45b1f2d1a49aee0a9e5fffa1))
+* increase coverage ([1aa4729](https://github.com/M4RC0Sx/esiosapy/commit/1aa47293b84282632daad29e4c6bfac6505b51ac))
+
+### Continuous Integration
+
+* test on every python version matrix ([1767f86](https://github.com/M4RC0Sx/esiosapy/commit/1767f86b5fdfcdf0bdc13f9f2776605c8dd12660))
+
 ## [2.1.0](https://github.com/M4RC0Sx/esiosapy/compare/v2.0.5...v2.1.0) (2026-02-12)
 
 ### Features
