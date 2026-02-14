@@ -4,14 +4,15 @@ from typing import TYPE_CHECKING
 from typing import Optional
 from typing import Union
 
-from esiosapy.models.offer_indicator.offer_indicator import OfferIndicator
+from esiosapy.managers.base import BaseOfferIndicatorManager
+from esiosapy.utils.request_helper import RequestHelper
 
 
 if TYPE_CHECKING:
-    from esiosapy.utils.request_helper import RequestHelper
+    from esiosapy.models.offer_indicator.offer_indicator import OfferIndicator
 
 
-class OfferIndicatorManager:
+class OfferIndicatorManager(BaseOfferIndicatorManager[RequestHelper]):
     """
     Manages offer indicator-related operations for the ESIOS API.
 
@@ -25,22 +26,8 @@ class OfferIndicatorManager:
         Initializes the OfferIndicatorManager with a RequestHelper.
 
         :param request_helper: An instance of RequestHelper used to make API requests.
-        :type request_helper: RequestHelper
         """
-        self.request_helper = request_helper
-
-    def _init_indicator(self, indicator: dict[str, Union[str, int]]) -> OfferIndicator:
-        """
-        Initializes an OfferIndicator object from a dictionary of indicator data.
-
-        :param indicator: A dictionary containing offer indicator data.
-        :type indicator: Dict[str, Union[str, int]]
-        :return: An OfferIndicator object initialized with the provided data.
-        :rtype: OfferIndicator
-        """
-        return OfferIndicator(
-            **indicator, raw=indicator, _request_helper=self.request_helper
-        )
+        super().__init__(request_helper)
 
     def list_all(
         self, taxonomy_terms: Optional[list[str]] = None
@@ -54,16 +41,14 @@ class OfferIndicatorManager:
 
         :param taxonomy_terms: A list of taxonomy terms to filter the offer indicators,
                                defaults to None.
-        :type taxonomy_terms: Optional[List[str]], optional
         :return: A list of OfferIndicator objects representing all (or filtered)
                  offer indicators.
-        :rtype: List[OfferIndicator]
         """
         params: dict[str, Union[str, int, list[str]]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 
-        response = self.request_helper.get_request("/offer_indicators", params=params)
+        response = self.request_helper.get_request(self._endpoint, params=params)
 
         return [
             self._init_indicator(indicator)

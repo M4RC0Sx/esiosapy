@@ -35,7 +35,7 @@ class AsyncESIOSAPYClient:
         self,
         token: str,
         base_url: str = ESIOS_API_URL,
-        timeout: float = 30.0,
+        timeout: int = 30,
     ) -> None:
         """
         Initializes the AsyncESIOSAPYClient with an API token and a base URL.
@@ -45,7 +45,7 @@ class AsyncESIOSAPYClient:
         :param base_url: The base URL for the ESIOS API. Defaults to ESIOS_API_URL.
         :type base_url: str, optional
         :param timeout: Request timeout in seconds, defaults to 30.
-        :type timeout: float
+        :type timeout: int
         :raises ImportError: If httpx is not installed.
         """
         if not _HTTPX_AVAILABLE:
@@ -104,5 +104,7 @@ class AsyncESIOSAPYClient:
             url = urljoin(self.base_url, url)
 
         client = self.request_helper._get_client()
-        response = await client.get(url, headers=headers)
+        response = await client.get(
+            url, headers=headers, timeout=self.request_helper.timeout
+        )
         return response

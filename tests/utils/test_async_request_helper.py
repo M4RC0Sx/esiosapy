@@ -26,15 +26,13 @@ class TestAsyncRequestHelper:
         self, async_request_helper: AsyncRequestHelper
     ) -> None:
         headers: dict[str, str] = {}
-        expected_headers: dict[str, str] = {
-            "Accept": "application/json; application/vnd.esios-api-v1+json",
-            "Content-Type": "application/json",
-            "x-api-key": "test-token",
-        }
 
         result = async_request_helper.add_default_headers(headers)
 
-        assert result == expected_headers
+        assert result["Accept"] == "application/json; application/vnd.esios-api-v1+json"
+        assert result["Content-Type"] == "application/json"
+        assert result["x-api-key"] == "test-token"
+        assert result["User-Agent"].startswith("esiosapy/")
 
     def test_add_default_headers_with_existing_headers(
         self, async_request_helper: AsyncRequestHelper
@@ -49,7 +47,6 @@ class TestAsyncRequestHelper:
 
         assert result == headers
 
-    @pytest.mark.asyncio
     async def test_get_request_success(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -70,7 +67,6 @@ class TestAsyncRequestHelper:
         assert "x-api-key" in call_args[1]["headers"]
         assert call_args[1]["headers"]["x-api-key"] == "test-token"
 
-    @pytest.mark.asyncio
     async def test_get_request_with_custom_headers_and_params(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -93,7 +89,6 @@ class TestAsyncRequestHelper:
         assert call_args[1]["headers"]["Accept"] == "text/xml"
         assert call_args[1]["params"]["page"] == 1
 
-    @pytest.mark.asyncio
     async def test_get_request_raises_authentication_error_on_401(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -116,7 +111,6 @@ class TestAsyncRequestHelper:
         assert "Authentication failed" in exc_info.value.message
         assert exc_info.value.details["status_code"] == 401
 
-    @pytest.mark.asyncio
     async def test_get_request_raises_authentication_error_on_403(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -139,7 +133,6 @@ class TestAsyncRequestHelper:
         assert "Access forbidden" in exc_info.value.message
         assert exc_info.value.details["status_code"] == 403
 
-    @pytest.mark.asyncio
     async def test_get_request_raises_api_response_error_on_other_http_errors(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -161,7 +154,6 @@ class TestAsyncRequestHelper:
 
         assert exc_info.value.status_code == 500
 
-    @pytest.mark.asyncio
     async def test_get_request_raises_api_error_on_network_error(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -180,7 +172,6 @@ class TestAsyncRequestHelper:
             type(exc_info.value)
         )
 
-    @pytest.mark.asyncio
     async def test_context_manager(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:
@@ -200,7 +191,6 @@ class TestAsyncRequestHelper:
 
         mock_client.aclose.assert_called_once()
 
-    @pytest.mark.asyncio
     async def test_close_without_context(
         self, async_request_helper: AsyncRequestHelper, mocker: MockerFixture
     ) -> None:

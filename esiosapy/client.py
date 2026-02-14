@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import Any
 from typing import Optional
 from urllib.parse import urljoin
 from urllib.parse import urlparse
@@ -21,9 +22,14 @@ class ESIOSAPYClient:
     types of requests to the ESIOS API, such as archives, indicators, and
     offer indicators. It simplifies the process of making requests by
     managing authentication and constructing the necessary URLs.
+
+    Can be used as a context manager:
+
+        with ESIOSAPYClient(token="xxx") as client:
+            indicators = client.indicators.list_all()
     """
 
-    def __init__(self, token: str, base_url: str = ESIOS_API_URL):
+    def __init__(self, token: str, base_url: str = ESIOS_API_URL, timeout: int = 30):
         """
         Initializes the ESIOSAPYClient with an API token and a base URL.
 
@@ -31,16 +37,31 @@ class ESIOSAPYClient:
         :type token: str
         :param base_url: The base URL for the ESIOS API. Defaults to ESIOS_API_URL.
         :type base_url: str, optional
+        :param timeout: Request timeout in seconds, defaults to 30.
+        :type timeout: int
         """
         self.token = token
         self.base_url = base_url
-        self.request_helper = RequestHelper(base_url, token)
+        self.timeout = timeout
+        self.request_helper = RequestHelper(base_url, token, timeout)
 
         self.archives: ArchiveManager = ArchiveManager(self.request_helper)
         self.indicators: IndicatorManager = IndicatorManager(self.request_helper)
         self.offer_indicators: OfferIndicatorManager = OfferIndicatorManager(
             self.request_helper
         )
+
+    def close(self) -> None:
+        """Close the client and release resources."""
+        self.request_helper._session.close()
+
+    def __enter__(self) -> ESIOSAPYClient:
+        """Enter the context manager."""
+        return self
+
+    def __exit__(self, *args: Any) -> None:
+        """Exit the context manager and close the session."""
+        self.close()
 
     def raw_request(
         self, url: str, headers: Optional[dict[str, str]] = None
@@ -68,4 +89,4 @@ class ESIOSAPYClient:
         if urlparse(url).netloc == "":
             url = urljoin(self.base_url, url)
 
-        return requests.get(url, headers=headers)
+        return requests.get(url, headers=headers, timeout=self.timeout)

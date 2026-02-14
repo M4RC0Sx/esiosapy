@@ -1,11 +1,23 @@
 from __future__ import annotations
 
+import logging
+import time
+
 from typing import Any
 from typing import Optional
 
+from tenacity import retry
+from tenacity import retry_if_exception_type
+from tenacity import stop_after_attempt
+from tenacity import wait_exponential
+
+from esiosapy import __version__
 from esiosapy.exceptions import APIResponseError
 from esiosapy.exceptions import AuthenticationError
 from esiosapy.exceptions import ESIOSAPIError
+
+
+logger = logging.getLogger("esiosapy")
 
 
 try:
@@ -14,6 +26,9 @@ try:
     _HTTPX_AVAILABLE = True
 except ImportError:
     _HTTPX_AVAILABLE = False
+
+# Retry conditions: retry on network errors, but not on auth/server errors
+retry_conditions = retry_if_exception_type(ESIOSAPIError)
 
 
 class AsyncRequestHelper:
@@ -27,7 +42,7 @@ class AsyncRequestHelper:
     Requires httpx to be installed. Install with: pip install esiosapy[async]
     """
 
-    def __init__(self, base_url: str, token: str, timeout: float = 30.0) -> None:
+    def __init__(self, base_url: str, token: str, timeout: int = 30) -> None:
         """
         Initializes the AsyncRequestHelper with a base URL and an API token.
 
@@ -36,7 +51,7 @@ class AsyncRequestHelper:
         :param token: The API token used for authentication in requests.
         :type token: str
         :param timeout: Request timeout in seconds, defaults to 30.
-        :type timeout: float
+        :type timeout: int
         :raises ImportError: If httpx is not installed.
         """
         if not _HTTPX_AVAILABLE:
@@ -86,8 +101,17 @@ class AsyncRequestHelper:
         if "x-api-key" not in headers:
             headers["x-api-key"] = self.token
 
+        if "User-Agent" not in headers:
+            headers["User-Agent"] = f"esiosapy/{__version__}"
+
         return headers
 
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        reraise=True,
+        retry=retry_conditions,
+    )
     async def get_request(
         self,
         path: str,
@@ -116,11 +140,36 @@ class AsyncRequestHelper:
 
         client = self._get_client()
 
+        start_time = time.monotonic()
+        logger.debug(
+            "HTTP request",
+            extra={"method": "GET", "url": url, "params": params},
+        )
+
         try:
             response = await client.get(url, headers=headers, params=params)
             response.raise_for_status()
+            elapsed = time.monotonic() - start_time
+            logger.debug(
+                "HTTP response",
+                extra={
+                    "method": "GET",
+                    "url": url,
+                    "status": response.status_code,
+                    "elapsed": f"{elapsed:.3f}s",
+                },
+            )
         except httpx.HTTPStatusError as e:
             status_code = e.response.status_code
+            logger.error(
+                "HTTP error",
+                extra={
+                    "method": "GET",
+                    "url": url,
+                    "status": status_code,
+                    "error": str(e),
+                },
+            )
             if status_code == 401:
                 msg = "Authentication failed. Check your API token."
                 raise AuthenticationError(msg, {"status_code": status_code}) from e
@@ -132,6 +181,10 @@ class AsyncRequestHelper:
                 msg, status_code=status_code, response_body=str(e.response.content)
             ) from e
         except httpx.RequestError as e:
+            logger.error(
+                "Network error",
+                extra={"method": "GET", "url": url, "error": str(e)},
+            )
             msg = f"Network error: {e}"
             raise ESIOSAPIError(msg) from e
 
