@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.2...v2.2.3) (2026-02-14)
+
+### Continuous Integration
+
+* re-add environment ([c4aaa29](https://github.com/M4RC0Sx/esiosapy/commit/c4aaa29791a669d263a8824392f57caeeef39671))
+
 ## [2.2.2](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.1...v2.2.2) (2026-02-14)
 
 ### Continuous Integration

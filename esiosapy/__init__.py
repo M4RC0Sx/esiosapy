@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 
-__version__ = "2.2.2"
+__version__ = "2.2.3"
 __author__ = "M4RC0Sx"
 
 from esiosapy.async_client import AsyncESIOSAPYClient
