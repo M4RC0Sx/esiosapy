@@ -1,14 +1,29 @@
 from __future__ import annotations
 
+import logging
+import time
+
 from typing import Optional
 from typing import Union
 from urllib.parse import urljoin
 
 import requests
 
+from tenacity import retry
+from tenacity import retry_if_exception_type
+from tenacity import stop_after_attempt
+from tenacity import wait_exponential
+
 from esiosapy.exceptions import APIResponseError
 from esiosapy.exceptions import AuthenticationError
 from esiosapy.exceptions import ESIOSAPIError
+
+
+logger = logging.getLogger("esiosapy")
+
+
+# Retry conditions: retry on network errors, but not on auth/server errors
+retry_conditions = retry_if_exception_type(ESIOSAPIError)
 
 
 class RequestHelper:
@@ -56,6 +71,12 @@ class RequestHelper:
 
         return headers
 
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        reraise=True,
+        retry=(retry_conditions),
+    )
     def get_request(
         self,
         path: str,
@@ -88,11 +109,36 @@ class RequestHelper:
         headers = self.add_default_headers(headers)
         url = urljoin(self.base_url, path)
 
+        start_time = time.monotonic()
+        logger.debug(
+            "HTTP request",
+            extra={"method": "GET", "url": url, "params": params},
+        )
+
         try:
             response = self._session.get(url, headers=headers, params=params)
             response.raise_for_status()
+            elapsed = time.monotonic() - start_time
+            logger.debug(
+                "HTTP response",
+                extra={
+                    "method": "GET",
+                    "url": url,
+                    "status": response.status_code,
+                    "elapsed": f"{elapsed:.3f}s",
+                },
+            )
         except requests.HTTPError as e:
             status_code = e.response.status_code if e.response else None
+            logger.error(
+                "HTTP error",
+                extra={
+                    "method": "GET",
+                    "url": url,
+                    "status": status_code,
+                    "error": str(e),
+                },
+            )
             if status_code == 401:
                 msg = "Authentication failed. Check your API token."
                 raise AuthenticationError(msg, {"status_code": status_code}) from e
@@ -102,6 +148,10 @@ class RequestHelper:
             msg = f"API request failed with status {status_code}"
             raise APIResponseError(msg, status_code=status_code) from e
         except requests.RequestException as e:
+            logger.error(
+                "Network error",
+                extra={"method": "GET", "url": url, "error": str(e)},
+            )
             msg = f"Network error: {e}"
             raise ESIOSAPIError(msg) from e
 
