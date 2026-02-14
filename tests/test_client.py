@@ -78,7 +78,7 @@ class TestESIOSAPYClient:
             "Custom-Header": "value",
         }
 
-        mock_get.assert_called_once_with(url, headers=expected_headers)
+        mock_get.assert_called_once_with(url, headers=expected_headers, timeout=30)
         assert response == mock_response
 
     def test_raw_request_with_relative_url(
@@ -100,5 +100,7 @@ class TestESIOSAPYClient:
 
         response: requests.Response = esios_client.raw_request(url, headers)
 
-        mock_get.assert_called_once_with(expected_url, headers=expected_headers)
+        mock_get.assert_called_once_with(
+            expected_url, headers=expected_headers, timeout=30
+        )
         assert response == mock_response

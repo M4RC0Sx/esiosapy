@@ -23,7 +23,7 @@ class ESIOSAPYClient:
     managing authentication and constructing the necessary URLs.
     """
 
-    def __init__(self, token: str, base_url: str = ESIOS_API_URL):
+    def __init__(self, token: str, base_url: str = ESIOS_API_URL, timeout: int = 30):
         """
         Initializes the ESIOSAPYClient with an API token and a base URL.
 
@@ -31,10 +31,13 @@ class ESIOSAPYClient:
         :type token: str
         :param base_url: The base URL for the ESIOS API. Defaults to ESIOS_API_URL.
         :type base_url: str, optional
+        :param timeout: Request timeout in seconds, defaults to 30.
+        :type timeout: int
         """
         self.token = token
         self.base_url = base_url
-        self.request_helper = RequestHelper(base_url, token)
+        self.timeout = timeout
+        self.request_helper = RequestHelper(base_url, token, timeout)
 
         self.archives: ArchiveManager = ArchiveManager(self.request_helper)
         self.indicators: IndicatorManager = IndicatorManager(self.request_helper)
@@ -68,4 +71,4 @@ class ESIOSAPYClient:
         if urlparse(url).netloc == "":
             url = urljoin(self.base_url, url)
 
-        return requests.get(url, headers=headers)
+        return requests.get(url, headers=headers, timeout=self.timeout)

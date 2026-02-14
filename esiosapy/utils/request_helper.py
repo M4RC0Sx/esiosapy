@@ -35,7 +35,7 @@ class RequestHelper:
     common tasks such as setting default headers and constructing the full URL.
     """
 
-    def __init__(self, base_url: str, token: str):
+    def __init__(self, base_url: str, token: str, timeout: int = 30):
         """
         Initializes the RequestHelper with a base URL and an API token.
 
@@ -43,9 +43,12 @@ class RequestHelper:
         :type base_url: str
         :param token: The API token used for authentication in requests.
         :type token: str
+        :param timeout: Request timeout in seconds, defaults to 30.
+        :type timeout: int
         """
         self.base_url = base_url
         self.token = token
+        self.timeout = timeout
         self._session = requests.Session()
 
     def add_default_headers(self, headers: dict[str, str]) -> dict[str, str]:
@@ -116,7 +119,9 @@ class RequestHelper:
         )
 
         try:
-            response = self._session.get(url, headers=headers, params=params)
+            response = self._session.get(
+                url, headers=headers, params=params, timeout=self.timeout
+            )
             response.raise_for_status()
             elapsed = time.monotonic() - start_time
             logger.debug(

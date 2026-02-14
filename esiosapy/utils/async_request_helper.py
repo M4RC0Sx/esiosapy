@@ -41,7 +41,7 @@ class AsyncRequestHelper:
     Requires httpx to be installed. Install with: pip install esiosapy[async]
     """
 
-    def __init__(self, base_url: str, token: str, timeout: float = 30.0) -> None:
+    def __init__(self, base_url: str, token: str, timeout: int = 30) -> None:
         """
         Initializes the AsyncRequestHelper with a base URL and an API token.
 
@@ -50,7 +50,7 @@ class AsyncRequestHelper:
         :param token: The API token used for authentication in requests.
         :type token: str
         :param timeout: Request timeout in seconds, defaults to 30.
-        :type timeout: float
+        :type timeout: int
         :raises ImportError: If httpx is not installed.
         """
         if not _HTTPX_AVAILABLE:
