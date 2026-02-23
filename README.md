@@ -17,8 +17,8 @@
 <a href="https://pypi.org/project/esiosapy" target="_blank">
     <img src="https://img.shields.io/pypi/pyversions/esiosapy.svg?color=%2334D058" alt="Supported Python versions">
 </a>
-<a href="https://codecov.io/gh/M4RC0Sx/esiosapy" target="_blank">
-    <img src="https://codecov.io/gh/M4RC0Sx/esiosapy/branch/develop/graph/badge.svg" alt="Coverage">
+<a href="https://coveralls.io/github/M4RC0Sx/esiosapy?branch=develop" target="_blank">
+    <img src="https://coveralls.io/repos/github/M4RC0Sx/esiosapy/badge.svg?branch=develop" alt="Coverage">
 </a>
 </p>
 

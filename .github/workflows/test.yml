@@ -57,13 +57,10 @@ jobs:
               run: uv sync --frozen
 
             - name: Run tests
-              run: uv run pytest --cov=esiosapy --cov-report=xml
+              run: uv run pytest --cov=esiosapy --cov-report=lcov
 
-            - name: Upload coverage to Codecov
+            - name: Upload coverage to Coveralls
               if: matrix.python-version == '3.13'
-              uses: codecov/codecov-action@v5
+              uses: coverallsapp/github-action@v2
               with:
-                token: ${{ secrets.CODECOV_TOKEN }}
-                files: ./coverage.xml
-                disable_search: true
-                plugins: noop
+                file: coverage.lcov
