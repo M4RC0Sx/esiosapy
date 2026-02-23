@@ -11,6 +11,7 @@ import requests
 
 from tenacity import retry
 from tenacity import retry_if_exception_type
+from tenacity import retry_if_not_exception_type
 from tenacity import stop_after_attempt
 from tenacity import wait_exponential
 
@@ -23,8 +24,10 @@ from esiosapy.exceptions import ESIOSAPIError
 logger = logging.getLogger("esiosapy")
 
 
-# Retry conditions: retry on network errors, but not on auth/server errors
-retry_conditions = retry_if_exception_type(ESIOSAPIError)
+# Retry only on network errors (base ESIOSAPIError), not on auth/API response errors
+retry_conditions = retry_if_exception_type(ESIOSAPIError) & retry_if_not_exception_type(
+    (AuthenticationError, APIResponseError)
+)
 
 
 class RequestHelper:

@@ -8,6 +8,7 @@ from typing import Optional
 
 from tenacity import retry
 from tenacity import retry_if_exception_type
+from tenacity import retry_if_not_exception_type
 from tenacity import stop_after_attempt
 from tenacity import wait_exponential
 
@@ -27,8 +28,10 @@ try:
 except ImportError:
     _HTTPX_AVAILABLE = False
 
-# Retry conditions: retry on network errors, but not on auth/server errors
-retry_conditions = retry_if_exception_type(ESIOSAPIError)
+# Retry only on network errors (base ESIOSAPIError), not on auth/API response errors
+retry_conditions = retry_if_exception_type(ESIOSAPIError) & retry_if_not_exception_type(
+    (AuthenticationError, APIResponseError)
+)
 
 
 class AsyncRequestHelper:
@@ -56,8 +59,8 @@ class AsyncRequestHelper:
         """
         if not _HTTPX_AVAILABLE:
             raise ImportError(
-                "The `httpx` package is required to prettify the description. "
-                "Install it with 'pip install httpx' "
+                "The `httpx` package is required for async support. "
+                "Install it with 'pip install esiosapy[async]' "
                 "or with your preferred package manager."
             )
         self.base_url = base_url
