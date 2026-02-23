@@ -14,8 +14,8 @@ class TimeTrunc(Enum):
     :vartype FIVE_MINUTES: str
     :cvar TEN_MINUTES: Represents the ten-minute level of temporal truncation.
     :vartype TEN_MINUTES: str
-    :cvar FIFTHEEN_MINUTES: Represents the fifteen-minute level of temporal truncation.
-    :vartype FIFTHEEN_MINUTES: str
+    :cvar FIFTEEN_MINUTES: Represents the fifteen-minute level of temporal truncation.
+    :vartype FIFTEEN_MINUTES: str
     :cvar HOUR: Represents the hourly level of temporal truncation.
     :vartype HOUR: str
     :cvar DAY: Represents the daily level of temporal truncation.
@@ -32,7 +32,7 @@ class TimeTrunc(Enum):
     TEN_MINUTES = "ten_minutes"
     """Represents the ten-minute level of temporal truncation."""
 
-    FIFTHEEN_MINUTES = "fiftheen_minutes"
+    FIFTEEN_MINUTES = "fifteen_minutes"
     """Represents the fifteen-minute level of temporal truncation."""
 
     HOUR = "hour"
