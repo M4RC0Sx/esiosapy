@@ -6,7 +6,14 @@ authors = [{ name = "M4RC0Sx" }]
 requires-python = ">=3.9,<4"
 readme = "README.md"
 license = "GPL-3.0-or-later"
+keywords = ["esios", "ree", "energy", "api", "electricity", "spain"]
 classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -40,6 +47,13 @@ docs = [
     "mkdocs-material>=9.6.1",
     "mkdocstrings[python]>=0.11.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/M4RC0Sx/esiosapy"
+Documentation = "https://m4rc0sx.github.io/esiosapy/"
+Repository = "https://github.com/M4RC0Sx/esiosapy"
+Issues = "https://github.com/M4RC0Sx/esiosapy/issues"
+Changelog = "https://github.com/M4RC0Sx/esiosapy/blob/master/CHANGELOG.md"
 
 [project.optional-dependencies]
 all = ["httpx>=0.27.0", "beautifulsoup4>=4.14.3"]
