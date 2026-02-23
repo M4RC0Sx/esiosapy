@@ -59,10 +59,20 @@ jobs:
             - name: Run tests
               run: uv run pytest --cov=esiosapy --cov-report=xml
 
+            - name: Debug coverage.xml
+              if: matrix.python-version == '3.13'
+              run: head -20 coverage.xml
+
+            - name: Upload coverage.xml as artifact
+              if: matrix.python-version == '3.13'
+              uses: actions/upload-artifact@v4
+              with:
+                name: coverage-report
+                path: coverage.xml
+
             - name: Upload coverage to Codecov
               if: matrix.python-version == '3.13'
-              uses: codecov/codecov-action@v4
-              with:
-                token: ${{ secrets.CODECOV_TOKEN }}
-                files: ./coverage.xml
-                verbose: true
+              run: |
+                curl -Os https://uploader.codecov.io/latest/linux/codecov
+                chmod +x codecov
+                ./codecov -t ${{ secrets.CODECOV_TOKEN }} -f ./coverage.xml -v
