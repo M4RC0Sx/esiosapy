@@ -92,8 +92,8 @@ class Indicator(BaseModel):
         except ImportError:
             raise ImportError(
                 "The `beautifulsoup4` package is required to prettify the description. "
-                "Install it with 'pip install beautifulsoup4' "
-                "or with your preferred package manager."
+                "Install it with 'pip install esiosapy[beautifulsoup]' "
+                "or 'pip install esiosapy[all]'."
             ) from None
 
         soup = BeautifulSoup(self.description, "html.parser")
