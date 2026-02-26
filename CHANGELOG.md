@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.3...v3.0.0) (2026-02-26)
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Python 3.9
+
+### Features
+
+* improve retry conditions ([d3a2489](https://github.com/M4RC0Sx/esiosapy/commit/d3a2489c7bee099270aee425fdf3404eaf514efd))
+
+### Bug Fixes
+
+* typo on fifteen minutes time trunc ([0cec580](https://github.com/M4RC0Sx/esiosapy/commit/0cec58047372c18e656dcd6b39ac2a018a457f98))
+
+### Documentation
+
+* add conributing guide ([71c81d9](https://github.com/M4RC0Sx/esiosapy/commit/71c81d92ef7214f1bdf0c8eb73cc3b828db54aae))
+* add missing properties on pyproject ([ac7b9ce](https://github.com/M4RC0Sx/esiosapy/commit/ac7b9cefc77e4cc1e5019d0ed36ea3b0094ff75a))
+* change pip install command in docstrings ([3056655](https://github.com/M4RC0Sx/esiosapy/commit/3056655da14468268ad9935c50ebfa384e62a9f9))
+* improve readme ([16d4a3f](https://github.com/M4RC0Sx/esiosapy/commit/16d4a3f9260620a7843b66850449956cabaea782))
+
+### Tests
+
+* add coverage report on tests ([277fa12](https://github.com/M4RC0Sx/esiosapy/commit/277fa1281bc5ce225f81f4bcbdbe4c098ba31897))
+
+### Build System
+
+* drop support for Python 3.9 ([35e1709](https://github.com/M4RC0Sx/esiosapy/commit/35e17093a4f08c044b6f02decba6f0efbb5ffc41))
+
+### Continuous Integration
+
+* add codecov config ([0f31aab](https://github.com/M4RC0Sx/esiosapy/commit/0f31aabdb24bc1a478e816f598ae75e1856c0b8f))
+* codecov ci trace ([907b514](https://github.com/M4RC0Sx/esiosapy/commit/907b5144d7e6896e010efc810eb8edcc860bfcd4))
+* continue if coveralls is unavailable ([952827b](https://github.com/M4RC0Sx/esiosapy/commit/952827bc3512a828bbf87588f8e229beb18b8f52))
+* disable pycov default files ([ca17399](https://github.com/M4RC0Sx/esiosapy/commit/ca173995e32e30e94080ea3b9efccf90395f9c52))
+* disable pycov default files ([b9f493e](https://github.com/M4RC0Sx/esiosapy/commit/b9f493ebebb55ae56d349f039afba3efe4e41b3f))
+* pytest cov with relative paths to work with codecov ([eebdbba](https://github.com/M4RC0Sx/esiosapy/commit/eebdbba1d83a0329275159b149bd67982d12d733))
+* read codecov token ([c50b3cd](https://github.com/M4RC0Sx/esiosapy/commit/c50b3cd047385771a79e11e198f1c7f84a3b32b2))
+* switch to coveralls ([8aa5432](https://github.com/M4RC0Sx/esiosapy/commit/8aa5432f4cff12680b1073ad64cc32dd08076d7e))
+* upload coverage artifact directly to codecov ([0e1082c](https://github.com/M4RC0Sx/esiosapy/commit/0e1082c509d158901bba5de797e85caf2c8ef409))
+* use codecov action v4 ([d8ea1f5](https://github.com/M4RC0Sx/esiosapy/commit/d8ea1f5a5c81d5dc5d10ed3d02ab99279914236f))
+
 ## [2.2.3](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.2...v2.2.3) (2026-02-14)
 
 ### Continuous Integration
