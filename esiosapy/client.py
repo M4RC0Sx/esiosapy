@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import Optional
 from urllib.parse import urljoin
 from urllib.parse import urlparse
 
@@ -64,7 +63,7 @@ class ESIOSAPYClient:
         self.close()
 
     def raw_request(
-        self, url: str, headers: Optional[dict[str, str]] = None
+        self, url: str, headers: dict[str, str] | None = None
     ) -> requests.Response:
         """
         Makes a raw GET request to a specified URL with optional headers.

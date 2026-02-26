@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any
 from typing import Generic
-from typing import Optional
 from typing import Protocol
 from typing import TypeVar
 
@@ -22,8 +21,8 @@ class RequestHelperProtocol(Protocol):
     def get_request(
         self,
         path: str,
-        headers: Optional[dict[str, str]] = None,
-        params: Optional[dict[str, Any]] = None,
+        headers: dict[str, str] | None = None,
+        params: dict[str, Any] | None = None,
     ) -> Any: ...
 
 

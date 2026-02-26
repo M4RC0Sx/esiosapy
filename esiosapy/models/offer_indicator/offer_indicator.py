@@ -3,7 +3,6 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 from typing import Any
-from typing import Union
 
 from pydantic import BaseModel
 
@@ -70,8 +69,8 @@ class OfferIndicator(BaseModel):
         except ImportError:
             raise ImportError(
                 "The `beautifulsoup4` package is required to prettify the description. "
-                "Install it with 'pip install beautifulsoup4' "
-                "or with your preferred package manager."
+                "Install it with 'pip install esiosapy[beautifulsoup]' "
+                "or 'pip install esiosapy[all]'."
             ) from None
 
         soup = BeautifulSoup(self.description, "html.parser")
@@ -81,7 +80,7 @@ class OfferIndicator(BaseModel):
 
     def get_data_by_date(
         self,
-        target_dt: Union[datetime, str],
+        target_dt: datetime | str,
         all_raw_data: bool = False,
     ) -> Any:
         """
@@ -103,7 +102,7 @@ class OfferIndicator(BaseModel):
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, Union[str, int, list[str]]] = {
+        params: dict[str, str | int | list[str]] = {
             "datetime": target_dt,
         }
 
@@ -117,8 +116,8 @@ class OfferIndicator(BaseModel):
 
     def get_data_by_date_range(
         self,
-        target_dt_start: Union[datetime, str],
-        target_dt_end: Union[datetime, str],
+        target_dt_start: datetime | str,
+        target_dt_end: datetime | str,
         all_raw_data: bool = False,
     ) -> Any:
         """
@@ -145,7 +144,7 @@ class OfferIndicator(BaseModel):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, Union[str, int, list[str]]] = {
+        params: dict[str, str | int | list[str]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }

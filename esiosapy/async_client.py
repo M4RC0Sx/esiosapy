@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import Optional
 from urllib.parse import urljoin
 from urllib.parse import urlparse
 
@@ -79,7 +78,7 @@ class AsyncESIOSAPYClient:
     async def raw_request(
         self,
         url: str,
-        headers: Optional[dict[str, str]] = None,
+        headers: dict[str, str] | None = None,
     ) -> httpx.Response:
         """
         Makes a raw async GET request to a specified URL with optional headers.

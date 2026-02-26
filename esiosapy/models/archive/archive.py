@@ -7,8 +7,6 @@ from datetime import datetime  # noqa: TC003
 from pathlib import Path
 from typing import TYPE_CHECKING
 from typing import Any
-from typing import Optional
-from typing import Union
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -118,7 +116,7 @@ class Archive(BaseModel):
 
     def download_file(
         self,
-        path: Optional[Union[str, Path]] = None,
+        path: str | Path | None = None,
         unzip: bool = True,
         remove_zip: bool = True,
     ) -> None:

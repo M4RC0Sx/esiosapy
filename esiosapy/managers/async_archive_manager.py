@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import TYPE_CHECKING
-from typing import Optional
-from typing import Union
 
 from esiosapy.managers.base import BaseArchiveManager
 from esiosapy.utils.async_request_helper import AsyncRequestHelper
@@ -44,9 +42,9 @@ class AsyncArchiveManager(BaseArchiveManager[AsyncRequestHelper]):
 
     async def list_by_date(
         self,
-        target_dt: Union[datetime, str],
-        date_type: Optional[ArchiveDateType] = None,
-        taxonomy_terms: Optional[list[str]] = None,
+        target_dt: datetime | str,
+        date_type: ArchiveDateType | None = None,
+        taxonomy_terms: list[str] | None = None,
     ) -> list[Archive]:
         """
         Retrieves a list of archives filtered by a specific date.
@@ -65,7 +63,7 @@ class AsyncArchiveManager(BaseArchiveManager[AsyncRequestHelper]):
         if isinstance(target_dt, datetime):
             target_dt = target_dt.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, Union[str, int, list[str]]] = {"date": target_dt}
+        params: dict[str, str | int | list[str]] = {"date": target_dt}
         if date_type:
             params["date_type"] = date_type.value
         if taxonomy_terms:
@@ -76,10 +74,10 @@ class AsyncArchiveManager(BaseArchiveManager[AsyncRequestHelper]):
 
     async def list_by_date_range(
         self,
-        target_dt_start: Union[datetime, str],
-        target_dt_end: Union[datetime, str],
-        date_type: Optional[ArchiveDateType] = None,
-        taxonomy_terms: Optional[list[str]] = None,
+        target_dt_start: datetime | str,
+        target_dt_end: datetime | str,
+        date_type: ArchiveDateType | None = None,
+        taxonomy_terms: list[str] | None = None,
     ) -> list[Archive]:
         """
         Retrieves a list of archives filtered by a date range.
@@ -103,7 +101,7 @@ class AsyncArchiveManager(BaseArchiveManager[AsyncRequestHelper]):
         if isinstance(target_dt_end, datetime):
             target_dt_end = target_dt_end.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-        params: dict[str, Union[str, int, list[str]]] = {
+        params: dict[str, str | int | list[str]] = {
             "start_date": target_dt_start,
             "end_date": target_dt_end,
         }

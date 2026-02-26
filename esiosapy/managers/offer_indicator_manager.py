@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from typing import Optional
-from typing import Union
 
 from esiosapy.managers.base import BaseOfferIndicatorManager
 from esiosapy.utils.request_helper import RequestHelper
@@ -29,9 +27,7 @@ class OfferIndicatorManager(BaseOfferIndicatorManager[RequestHelper]):
         """
         super().__init__(request_helper)
 
-    def list_all(
-        self, taxonomy_terms: Optional[list[str]] = None
-    ) -> list[OfferIndicator]:
+    def list_all(self, taxonomy_terms: list[str] | None = None) -> list[OfferIndicator]:
         """
         Retrieves a list of all offer indicators, optionally filtered by taxonomy terms.
 
@@ -44,7 +40,7 @@ class OfferIndicatorManager(BaseOfferIndicatorManager[RequestHelper]):
         :return: A list of OfferIndicator objects representing all (or filtered)
                  offer indicators.
         """
-        params: dict[str, Union[str, int, list[str]]] = {}
+        params: dict[str, str | int | list[str]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 

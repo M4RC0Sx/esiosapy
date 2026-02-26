@@ -3,14 +3,13 @@ from __future__ import annotations
 import logging
 import time
 
-from typing import Optional
-from typing import Union
 from urllib.parse import urljoin
 
 import requests
 
 from tenacity import retry
 from tenacity import retry_if_exception_type
+from tenacity import retry_if_not_exception_type
 from tenacity import stop_after_attempt
 from tenacity import wait_exponential
 
@@ -23,8 +22,10 @@ from esiosapy.exceptions import ESIOSAPIError
 logger = logging.getLogger("esiosapy")
 
 
-# Retry conditions: retry on network errors, but not on auth/server errors
-retry_conditions = retry_if_exception_type(ESIOSAPIError)
+# Retry only on network errors (base ESIOSAPIError), not on auth/API response errors
+retry_conditions = retry_if_exception_type(ESIOSAPIError) & retry_if_not_exception_type(
+    (AuthenticationError, APIResponseError)
+)
 
 
 class RequestHelper:
@@ -87,8 +88,8 @@ class RequestHelper:
     def get_request(
         self,
         path: str,
-        headers: Optional[dict[str, str]] = None,
-        params: Optional[dict[str, Union[str, int, list[str]]]] = None,
+        headers: dict[str, str] | None = None,
+        params: dict[str, str | int | list[str]] | None = None,
     ) -> requests.Response:
         """
         Makes a GET request to the specified path, with optional headers and parameters.

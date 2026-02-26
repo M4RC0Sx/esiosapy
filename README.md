@@ -1,6 +1,5 @@
 # esiosapy
 
-
 <p align="center">
     <em>Unofficial ESIOS API Python library. Up to date and fully equipped.</em>
 </p>
@@ -18,49 +17,80 @@
 <a href="https://pypi.org/project/esiosapy" target="_blank">
     <img src="https://img.shields.io/pypi/pyversions/esiosapy.svg?color=%2334D058" alt="Supported Python versions">
 </a>
+<a href="https://coveralls.io/github/M4RC0Sx/esiosapy?branch=develop" target="_blank">
+    <img src="https://coveralls.io/repos/github/M4RC0Sx/esiosapy/badge.svg?branch=develop" alt="Coverage">
+</a>
 </p>
 
 ---
 
-```python
-from esiosapy.client import ESIOSAPYClient
-from esiosapy.models.indicator.time_trunc import TimeTrunc
+**Documentation**: [https://m4rc0sx.github.io/esiosapy/](https://m4rc0sx.github.io/esiosapy/)
 
-client = ESIOSAPYClient(
-    token="your_token"
-)
+---
 
-indicators = client.indicators.list_all()
-indicator = indicators[0]
+esiosapy allows you to communicate with the [ESIOS/REE API](https://api.esios.ree.es/) in a comfortable and abstract way, so that everything is handled by objects and you will not need to write any raw request.
 
-data = indicator.get_data("2021-01-01", "2021-01-02", time_trunc=TimeTrunc.HOUR)
-```
+## Features
 
-esiosapy allows you to communicate with the ESIOS/REE API in a comfortable and abstract way, so that everything is handled by objects and you will not need to write any raw request.
+- **Simple API**: Easy-to-use client for accessing ESIOS data
+- **Sync & Async**: Both synchronous and asynchronous clients
+- **Type Hints**: Full type annotations with strict mypy support
+- **Retry Logic**: Automatic retry with exponential backoff for network errors
+- **CLI**: Command-line interface for quick data exploration
+- **Logging**: Built-in logging for debugging
+- **Configurable Timeouts**: Customizable request timeouts
 
+## Installation
 
-## Installing esiosapy
-esiosapy is available on PyPi and it supports Python >=3.8:
+esiosapy is available on PyPI and supports Python >=3.10:
 
 ```bash
 pip install esiosapy
 ```
 
-## User guide
-**There will be a more detailed in the future.**
+### Optional dependencies
 
-You need a personal token in order to use the ESIOS API. You can request it in [https://api.esios.ree.es/](https://api.esios.ree.es/)
+```bash
+# Async support (httpx)
+pip install esiosapy[async]
+
+# HTML description prettifying (beautifulsoup4)
+pip install esiosapy[beautifulsoup]
+
+# All optional dependencies
+pip install esiosapy[all]
+```
+
+## Quick start
+
+You need a personal token to use the ESIOS API. You can request one at [https://api.esios.ree.es/](https://api.esios.ree.es/).
+
+### Indicators
+
+```python
+from esiosapy import ESIOSAPYClient
+from esiosapy.models.indicator.time_trunc import TimeTrunc
+
+client = ESIOSAPYClient(token="your_esios_api_token")
+
+# Get all indicators
+indicators = client.indicators.list_all()
+
+# Search indicators by name
+solar = client.indicators.search("solar")
+
+# Get data for an indicator
+indicator = indicators[0]
+data = indicator.get_data("2021-01-01", "2021-01-02", time_trunc=TimeTrunc.HOUR)
+```
 
 ### Archives
+
 ```python
-from esiosapy.client import ESIOSAPYClient
+from esiosapy import ESIOSAPYClient
 from esiosapy.models.archive.archive_date_type import ArchiveDateType
 
-
-# Init client
-client = ESIOSAPYClient(
-    "your_esios_api_token"
-)
+client = ESIOSAPYClient(token="your_esios_api_token")
 
 # Search files by date range
 archives = client.archives.list_by_date_range(
@@ -69,53 +99,53 @@ archives = client.archives.list_by_date_range(
     date_type=ArchiveDateType.PUBLICATION,
 )
 
-# Get first file. here you should filter with your needed criteria
-x = archives[0]
-
-# Download file in current path, unzip and remove zip
-x.download_file(unzip=True, remove_zip=True)
+# Download, unzip, and clean up
+archives[0].download_file(unzip=True, remove_zip=True)
 ```
 
-To elaborate your filtering criteria, you can check out [the attributes of the Archive model](https://github.com/M4RC0Sx/esiosapy/blob/master/esiosapy/models/archive/archive.py).
+### Async usage
 
-### Indicators
 ```python
-from esiosapy.client import ESIOSAPYClient
-from esiosapy.models.indicator.time_trunc import TimeTrunc
+import asyncio
+from esiosapy import AsyncESIOSAPYClient
 
-# Init client
-client = ESIOSAPYClient(
-    token="you_esios_api_token"
-)
+async def main():
+    async with AsyncESIOSAPYClient(token="your_esios_api_token") as client:
+        indicators = await client.indicators.list_all()
 
-# Get all indicators
-indicators = client.indicators.list_all()
-
-# Get first file. here you should filter with your needed criteria
-# Usually, you are looking for a specific indicator
-indicator = indicators[0]
-
-# Get data between 2 dates, with time_trunc of 1 hour
-data = indicator.get_data("2021-01-01", "2021-01-02", time_trunc=TimeTrunc.HOUR)
+asyncio.run(main())
 ```
 
-To elaborate your filtering criteria, you can check out [the attributes of the Indicator model](https://github.com/M4RC0Sx/esiosapy/blob/master/esiosapy/models/indicator/indicator.py).
+### Context manager
 
+Both sync and async clients support context managers for automatic resource cleanup:
 
-## TO-DO List
-- [x] Archive model handling.
-- [x] Indicator model handling.
-- [x] OfferIndicator model handling.
-- [x] Add docstrings to the entire project.
-- [ ] Archive JSON model handling.
-- [ ] Auction model handling.
-- [ ] Generate wiki with/and more elaborated docs.
-- [ ] Add more unit tests.
-- [ ] Support date range slicing to avoid long requests/responses.
+```python
+with ESIOSAPYClient(token="your_esios_api_token") as client:
+    indicators = client.indicators.list_all()
+```
+
+### CLI
+
+```bash
+# List all indicators
+esiosapy --token YOUR_TOKEN indicators
+
+# List all archives
+esiosapy --token YOUR_TOKEN archives
+
+# Set custom timeout
+esiosapy --token YOUR_TOKEN --timeout 60 indicators
+```
 
 ## Dependencies
-esiosapy depends on Pydantic and requests.
+
+esiosapy depends on [Pydantic](https://docs.pydantic.dev/), [requests](https://requests.readthedocs.io/), and [tenacity](https://tenacity.readthedocs.io/).
 
 ## Contributing
-All contributions are welcome via direct contact with me or pull requests, as long as they are well elaborated and follow the conventional commits format.
 
+All contributions are welcome! Please read the [contributing guide](CONTRIBUTING.md) for details on how to get started.
+
+## License
+
+This project is licensed under the GPL-3.0-or-later license. See the [LICENSE](LICENSE) file for details.
