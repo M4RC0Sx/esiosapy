@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from typing import Optional
-from typing import Union
 
 from esiosapy.managers.base import BaseIndicatorManager
 from esiosapy.utils.async_request_helper import AsyncRequestHelper
@@ -30,7 +28,7 @@ class AsyncIndicatorManager(BaseIndicatorManager[AsyncRequestHelper]):
         super().__init__(request_helper)
 
     async def list_all(
-        self, taxonomy_terms: Optional[list[str]] = None
+        self, taxonomy_terms: list[str] | None = None
     ) -> list[Indicator]:
         """
         Retrieves a list of all indicators, optionally filtered by taxonomy terms.
@@ -42,7 +40,7 @@ class AsyncIndicatorManager(BaseIndicatorManager[AsyncRequestHelper]):
                                defaults to None.
         :return: A list of Indicator objects representing all (or filtered) indicators.
         """
-        params: dict[str, Union[str, int, list[str]]] = {}
+        params: dict[str, str | int | list[str]] = {}
         if taxonomy_terms:
             params["taxonomy_terms[]"] = taxonomy_terms
 

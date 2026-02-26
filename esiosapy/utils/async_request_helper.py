@@ -4,7 +4,6 @@ import logging
 import time
 
 from typing import Any
-from typing import Optional
 
 from tenacity import retry
 from tenacity import retry_if_exception_type
@@ -66,7 +65,7 @@ class AsyncRequestHelper:
         self.base_url = base_url
         self.token = token
         self.timeout = timeout
-        self._client: Optional[httpx.AsyncClient] = None
+        self._client: httpx.AsyncClient | None = None
 
     def _get_client(self) -> httpx.AsyncClient:
         """Get or create the async client."""
@@ -118,8 +117,8 @@ class AsyncRequestHelper:
     async def get_request(
         self,
         path: str,
-        headers: Optional[dict[str, str]] = None,
-        params: Optional[Any] = None,
+        headers: dict[str, str] | None = None,
+        params: Any | None = None,
     ) -> httpx.Response:
         """
         Makes an async GET request to the specified path.

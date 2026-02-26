@@ -3,7 +3,7 @@ name = "esiosapy"
 version = "0.0.1"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
 authors = [{ name = "M4RC0Sx" }]
-requires-python = ">=3.9,<4"
+requires-python = ">=3.10,<4"
 readme = "README.md"
 license = "GPL-3.0-or-later"
 keywords = ["esios", "ree", "energy", "api", "electricity", "spain"]
@@ -15,7 +15,6 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -75,7 +74,7 @@ requires = ["uv_build>=0.9.30,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 line-length = 88
 
 [tool.ruff.lint]
@@ -114,7 +113,7 @@ keep-runtime-typing = true
 
 [tool.mypy]
 strict = true
-python_version = "3.9"
+python_version = "3.10"
 namespace_packages = true
 show_error_codes = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]

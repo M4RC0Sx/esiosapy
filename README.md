@@ -42,7 +42,7 @@ esiosapy allows you to communicate with the [ESIOS/REE API](https://api.esios.re
 
 ## Installation
 
-esiosapy is available on PyPI and supports Python >=3.9:
+esiosapy is available on PyPI and supports Python >=3.10:
 
 ```bash
 pip install esiosapy

@@ -3,8 +3,6 @@ from __future__ import annotations
 import logging
 import time
 
-from typing import Optional
-from typing import Union
 from urllib.parse import urljoin
 
 import requests
@@ -90,8 +88,8 @@ class RequestHelper:
     def get_request(
         self,
         path: str,
-        headers: Optional[dict[str, str]] = None,
-        params: Optional[dict[str, Union[str, int, list[str]]]] = None,
+        headers: dict[str, str] | None = None,
+        params: dict[str, str | int | list[str]] | None = None,
     ) -> requests.Response:
         """
         Makes a GET request to the specified path, with optional headers and parameters.
