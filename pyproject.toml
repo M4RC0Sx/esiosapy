@@ -1,6 +1,6 @@
 [project]
 name = "esiosapy"
-version = "3.0.0"
+version = "3.0.1"
 description = "Unofficial ESIOS API Python library. Up to date and fully equipped."
 authors = [{ name = "M4RC0Sx" }]
 requires-python = ">=3.10,<4"

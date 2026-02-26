@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/M4RC0Sx/esiosapy/compare/v3.0.0...v3.0.1) (2026-02-26)
+
+### Continuous Integration
+
+* update gh pages action to avoid duplicate artifacts ([ac0e463](https://github.com/M4RC0Sx/esiosapy/commit/ac0e463363b19ad68c62fe2dbfffc7795af0dc94))
+
 ## [3.0.0](https://github.com/M4RC0Sx/esiosapy/compare/v2.2.3...v3.0.0) (2026-02-26)
 
 ### ⚠ BREAKING CHANGES
